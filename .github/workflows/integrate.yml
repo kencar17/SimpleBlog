@@ -19,11 +19,19 @@ jobs:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+        credentials: ${{ secrets.BLOG_SECRET_KEY }}
+      env:
+        credentials: ${{ secrets.BLOG_SECRET_KEY }}
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      uses: actions/setup-python@v3
+      with:
+        credentials: ${{ secrets.BLOG_SECRET_KEY }}
       env:
         credentials: ${{ secrets.BLOG_SECRET_KEY }}
       run: |
