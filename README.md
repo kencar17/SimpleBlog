@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/amplication/amplication?color=purple"/>
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/kencar17/SimpleBlog?color=blue"/>
   <img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg"/>
   <img alt="Pylint" src="https://img.shields.io/badge/linting-pylint-yellowgreen"/>
   <a href="https://opensource.org/licenses/MIT">
