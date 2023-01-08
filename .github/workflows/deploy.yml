@@ -24,8 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
-      with:
-        credentials: ${{ secrets.BLOG_SECRET_KEY }}
       env:
         credentials: ${{ secrets.BLOG_SECRET_KEY }}
       run: |
