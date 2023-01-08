@@ -1,8 +1,6 @@
 name: Simple Blog CI
 
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
     branches: [ "master" , "development"]
 
@@ -12,7 +10,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ["3.9", "3.10"]
+        python-version: ["3.10"]
     env:
       BLOG_SECRET_KEY: ${{ secrets.BLOG_SECRET_KEY }}
     steps:
