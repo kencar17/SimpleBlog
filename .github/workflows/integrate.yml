@@ -21,7 +21,6 @@ jobs:
       BLOG_PORT: ${{ secrets.BLOG_PORT }}
     steps:
     - uses: actions/checkout@v3
-#    - uses: psf/black@stable
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
     - name: Install Dependencies
