@@ -1,16 +1,14 @@
-
 """
-    Title: User Pages
-    Description: This file will contain functions for User Model.
-    Created: January 25, 2019
-    Author: Carmichael
-    Edited By:
-    Edited Date:
+User database Model.
+This module will contain functions and fields for User Model.
+Authors: Kenneth Carmichael (kencar17)
+Date: January 16th 2023
+Version: 1.0
 """
 import uuid
 
 from django.contrib.auth.models import AbstractUser
-from django.db.models import TextField, ImageField, EmailField, UUIDField
+from django.db.models import TextField, EmailField, UUIDField
 
 from apps.authentication.managers.user import UserManager
 

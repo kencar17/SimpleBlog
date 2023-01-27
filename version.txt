@@ -1,0 +1,9 @@
+Alpha - 0.1 (TBA, 2023)
+    Features:
+        - Add Custom Exception Handling
+        - Add Custom Pagination
+        - Add JWT Authentication
+    Change:
+        -
+    Fix:
+        -
