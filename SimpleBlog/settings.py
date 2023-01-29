@@ -1,4 +1,3 @@
-# TODO - Customer User Model
 """
 Django settings for SimpleBlog project.
 
