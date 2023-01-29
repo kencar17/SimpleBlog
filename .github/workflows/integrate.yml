@@ -13,6 +13,7 @@ jobs:
         python-version: ["3.10"]
     env:
       BLOG_SECRET_KEY: ${{ secrets.BLOG_SECRET_KEY }}
+      BLOG_SIGNING_KEY: ${{ secrets.BLOG_SIGNING_KEY }}
       BLOG_DJANGO_DEBUG: ${{ secrets.BLOG_DJANGO_DEBUG }}
       BLOG_DB_NAME: ${{ secrets.BLOG_DB_NAME }}
       BLOG_USER: ${{ secrets.BLOG_USER }}
