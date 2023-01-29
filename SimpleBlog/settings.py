@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "rest_framework",
     "rest_framework_simplejwt",
-    "apps.authentication.apps.AuthenticationConfig"
+    "apps.account.apps.AccountConfig",
+    "apps.authentication.apps.AuthenticationConfig",
 ]
 
 MIDDLEWARE = [
@@ -151,7 +152,7 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom User Model
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = 'account.User'
 
 # Change Default Password Hashers
 PASSWORD_HASHERS = [

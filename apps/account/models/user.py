@@ -10,7 +10,7 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db.models import TextField, EmailField, UUIDField
 
-from apps.authentication.managers.user import UserManager
+from apps.account.managers.user import UserManager
 
 
 class User(AbstractUser):

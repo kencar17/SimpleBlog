@@ -1236,3 +1236,6 @@ abstract.record*
 secring.*
 
 .idea/
+
+apps/account/migrations
+apps/authentication/migrations
