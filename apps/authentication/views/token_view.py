@@ -8,7 +8,10 @@ Version: 1.0
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from apps.authentication.serializers.token_serializers import BlogTokenObtainPairSerializer, BlogTokenRefreshSerializer
+from apps.authentication.serializers.token_serializers import (
+    BlogTokenObtainPairSerializer,
+    BlogTokenRefreshSerializer,
+)
 from apps.common.utilities.utilities import json_response
 
 
@@ -16,6 +19,7 @@ class BlogTokenObtainPairView(TokenObtainPairView):
     """
     Get Blog Token Obtain Pair View
     """
+
     serializer_class = BlogTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
@@ -40,6 +44,7 @@ class BlogTokenRefreshView(TokenRefreshView):
     """
     Blog Token Refresh View
     """
+
     serializer_class = BlogTokenRefreshSerializer
 
     def post(self, request, *args, **kwargs):

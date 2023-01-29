@@ -3,6 +3,8 @@ Alpha - 0.1 (TBA, 2023)
         - Add Custom Exception Handling
         - Add Custom Pagination
         - Add JWT Authentication
+        - Add Encryption Utility
+        - Add Secret Key Generation
     Change:
         -
     Fix:

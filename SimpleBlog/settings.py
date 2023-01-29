@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("BLOG_SECRET_KEY", "")
+JWT_SIGNING_KEY = os.environ.get("BLOG_SIGNING_KEY", "")
 
 if not SECRET_KEY:
     raise KeyError(
@@ -66,6 +67,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
+    'ALGORITHM': 'HS512',
+    'SIGNING_KEY': JWT_SIGNING_KEY
 }
 
 ROOT_URLCONF = "SimpleBlog.urls"
