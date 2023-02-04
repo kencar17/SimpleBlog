@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("BLOG_SECRET_KEY", "")
 JWT_SIGNING_KEY = os.environ.get("BLOG_SIGNING_KEY", "")
+DB_ENCRYPTION_KEY = os.environ.get("BLOG_DB_ENCRYPTION_KEY", "")
 
 if not SECRET_KEY:
     raise KeyError(
