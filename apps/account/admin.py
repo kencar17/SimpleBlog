@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import register, ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 
-from apps.account.models import User
+from apps.account.models import User, Account
 
 
 # Register your models here.
@@ -11,6 +11,7 @@ class MainUserAdmin(UserAdmin):
     model = User
 
     list_display = (
+        "account",
         "username",
         "first_name",
         "last_name",
@@ -29,6 +30,9 @@ class MainUserAdmin(UserAdmin):
             "Permissions",
             {
                 "fields": (
+                    "is_contributor",
+                    "is_editor",
+                    "is_blog_owner",
                     "is_active",
                     "is_staff",
                     "is_superuser",
@@ -58,4 +62,22 @@ class MainUserAdmin(UserAdmin):
 
     def get_queryset(self, request):
         qs = super(MainUserAdmin, self).get_queryset(request)
+        return qs.select_related()
+
+
+@register(Account)
+class MainAccountAdmin(ModelAdmin):
+    model = Account
+
+    list_display = (
+        "created_date",
+        "account_name",
+        "contact_email"
+    )
+    list_filter = ("account_name", "contact_email")
+    search_fields = ("account_name", "contact_email")
+    ordering = ("-created_date", "account_name")
+
+    def get_queryset(self, request):
+        qs = super(MainAccountAdmin, self).get_queryset(request)
         return qs.select_related()

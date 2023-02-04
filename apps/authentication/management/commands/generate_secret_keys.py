@@ -5,7 +5,6 @@ Authors: Kenneth Carmichael (kencar17)
 Date: January 29th 2023
 Version: 1.0
 """
-import base64
 
 from cryptography.fernet import Fernet
 from django.core.management import BaseCommand
