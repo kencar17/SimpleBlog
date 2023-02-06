@@ -25,7 +25,7 @@ class MainUserAdmin(UserAdmin):
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "bio")}),
+        ("Personal info", {"fields": ("display_name", "first_name", "last_name", "bio")}),
         (
             "Permissions",
             {
