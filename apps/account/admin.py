@@ -22,10 +22,14 @@ class MainUserAdmin(UserAdmin):
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("first_name", "last_name", "username")
     ordering = ("first_name", "last_name")
+    autocomplete_fields = ("account",)
 
     fieldsets = (
-        (None, {"fields": ("username", "password")}),
-        ("Personal info", {"fields": ("display_name", "first_name", "last_name", "bio")}),
+        (None, {"fields": ("account", "username", "password")}),
+        (
+            "Personal info",
+            {"fields": ("display_name", "first_name", "last_name", "bio")},
+        ),
         (
             "Permissions",
             {
@@ -50,6 +54,7 @@ class MainUserAdmin(UserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
+                    "account",
                     "username",
                     "first_name",
                     "last_name",
@@ -60,20 +65,12 @@ class MainUserAdmin(UserAdmin):
         ),
     )
 
-    def get_queryset(self, request):
-        qs = super(MainUserAdmin, self).get_queryset(request)
-        return qs.select_related()
-
 
 @register(Account)
 class MainAccountAdmin(ModelAdmin):
     model = Account
 
-    list_display = (
-        "created_date",
-        "account_name",
-        "contact_email"
-    )
+    list_display = ("created_date", "account_name", "contact_email")
     list_filter = ("account_name", "contact_email")
     search_fields = ("account_name", "contact_email")
     ordering = ("-created_date", "account_name")

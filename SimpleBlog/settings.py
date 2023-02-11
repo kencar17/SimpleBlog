@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "rest_framework",
     "rest_framework_simplejwt",
+    "debug_toolbar",
     "apps.account.apps.AccountConfig",
     "apps.authentication.apps.AuthenticationConfig",
 ]
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 REST_FRAMEWORK = {

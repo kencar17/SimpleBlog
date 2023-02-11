@@ -12,7 +12,6 @@ from apps.account.models import Account, User
 
 
 class Command(BaseCommand):
-
     def add_arguments(self, parser):
         parser.add_argument(
             "email",
@@ -31,7 +30,7 @@ class Command(BaseCommand):
         initial_account = {
             "account_name": "My Account",
             "bio": "Am a bio",
-            "contact_email": "email@email.com"
+            "contact_email": "email@email.com",
         }
 
         initial_user = {
@@ -39,7 +38,7 @@ class Command(BaseCommand):
             "first_name": "First",
             "last_name": "Last",
             "is_staff": True,
-            "is_superuser": True
+            "is_superuser": True,
         }
 
         account = Account.create(param_dict=initial_account)

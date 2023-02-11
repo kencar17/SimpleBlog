@@ -8,9 +8,17 @@ Version: 1.0
 import uuid
 
 from django.contrib.auth.models import AbstractUser
-from django.db.models import TextField, EmailField, UUIDField, BooleanField, ForeignKey, PROTECT, CharField
+from django.db.models import (
+    TextField,
+    EmailField,
+    UUIDField,
+    BooleanField,
+    ForeignKey,
+    PROTECT,
+    CharField,
+)
 
-from apps.account.managers.user import UserManager
+from apps.account.models.managers.user import UserManager
 from apps.account.models import Account
 from apps.common.globals.database import MAX_CHAR_LEN, DEFAULT_CHAR_LEN
 from apps.common.models.base_model import BaseTable
@@ -22,7 +30,9 @@ class User(AbstractUser, BaseTable):
     """
 
     id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    account = ForeignKey(Account, on_delete=PROTECT, help_text="Account user belongs too.")
+    account = ForeignKey(
+        Account, on_delete=PROTECT, help_text="Account user belongs too."
+    )
     username = EmailField(
         unique=True,
         help_text="Email field is now username",
@@ -30,7 +40,12 @@ class User(AbstractUser, BaseTable):
             "unique": "A user with that email already exists.",
         },
     )
-    display_name = CharField(default="", max_length=DEFAULT_CHAR_LEN, help_text="Account Display Name", blank=True)
+    display_name = CharField(
+        default="",
+        max_length=DEFAULT_CHAR_LEN,
+        help_text="Account Display Name",
+        blank=True,
+    )
     bio = TextField(default="", max_length=MAX_CHAR_LEN, blank=True)
 
     is_contributor = BooleanField(

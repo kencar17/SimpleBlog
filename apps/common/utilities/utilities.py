@@ -35,3 +35,18 @@ def json_response(
         status=http_status,
         safe=False,
     )
+
+
+def default_pagination(data: Union[list, dict]) -> dict:
+    """
+    Default Pagination Results.
+    :return:
+    """
+    return {
+        "count": 0,
+        "pages": 0,
+        "current": 0,
+        "previous": None,
+        "next": None,
+        "results": data
+    }

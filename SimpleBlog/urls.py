@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path("blog-site-admin", admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
 
-    path("api/", include("apps.authentication.urls")),
+    path(f"api/auth/", include("apps.authentication.urls")),
+    path(f"api/account/", include("apps.account.urls")),
 ]
