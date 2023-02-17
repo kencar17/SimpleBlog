@@ -50,4 +50,6 @@ class Command(BaseCommand):
 
         self.stdout.write(f"Environment Variable: 'BLOG_SECRET_KEY': {secret_key}")
         self.stdout.write(f"Environment Variable: 'BLOG_SIGNING_KEY': {signing_key}")
-        self.stdout.write(f"Environment Variable: 'BLOG_DB_ENCRYPTION_KEY': {encryption_key.decode('utf-8')}")
+        self.stdout.write(
+            f"Environment Variable: 'BLOG_DB_ENCRYPTION_KEY': {encryption_key.decode('utf-8')}"
+        )

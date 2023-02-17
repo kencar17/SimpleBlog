@@ -62,16 +62,16 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'EXCEPTION_HANDLER': 'apps.common.utilities.exceptions.blog_exception_handler'
+    "EXCEPTION_HANDLER": "apps.common.utilities.exceptions.blog_exception_handler",
 }
 
 SIMPLE_JWT = {
-    'ROTATE_REFRESH_TOKENS': True,
-    'ALGORITHM': 'HS512',
-    'SIGNING_KEY': JWT_SIGNING_KEY
+    "ROTATE_REFRESH_TOKENS": True,
+    "ALGORITHM": "HS512",
+    "SIGNING_KEY": JWT_SIGNING_KEY,
 }
 
 ROOT_URLCONF = "SimpleBlog.urls"
@@ -155,7 +155,7 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom User Model
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = "account.User"
 
 # Change Default Password Hashers
 PASSWORD_HASHERS = [
