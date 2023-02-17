@@ -38,7 +38,7 @@ class Command(BaseCommand):
 
         password = User.objects.make_random_password(
             length=16,
-            allowed_chars="abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789!@#$%^&*;:"
+            allowed_chars="abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789!@#$%^&*;:",
         )
 
         initial_user = {
@@ -48,7 +48,7 @@ class Command(BaseCommand):
             "last_name": "Last",
             "is_staff": True,
             "is_superuser": True,
-            "password": password
+            "password": password,
         }
 
         user = User.objects.create(**initial_user)

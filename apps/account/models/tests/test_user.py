@@ -13,12 +13,10 @@ from apps.account.models import User, Account
 
 class TestUserModel(TestCase):
     """
-        Test User Model
+    Test User Model
     """
 
-    fixtures = [
-        "tests/account.json"
-    ]
+    fixtures = ["tests/account.json"]
 
     def setUp(self) -> None:
         self.account = Account.objects.first()
@@ -34,7 +32,7 @@ class TestUserModel(TestCase):
             "is_contributor": True,
             "is_editor": True,
             "is_blog_owner": False,
-            "password": "AmATestPasswordToday"
+            "password": "AmATestPasswordToday",
         }
 
     def test_user_creation(self):

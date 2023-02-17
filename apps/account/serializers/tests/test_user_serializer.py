@@ -10,17 +10,18 @@ import copy
 from django.test import TestCase
 
 from apps.account.models import Account, User
-from apps.account.serializers.user_serializer import UserSerializer, CreateUserSerializer
+from apps.account.serializers.user_serializer import (
+    UserSerializer,
+    CreateUserSerializer,
+)
 
 
 class TestUserSerializerModel(TestCase):
     """
-        Test User Serializer Model
+    Test User Serializer Model
     """
 
-    fixtures = [
-        "tests/account.json"
-    ]
+    fixtures = ["tests/account.json"]
 
     def setUp(self) -> None:
         self.account = Account.objects.first()
@@ -36,7 +37,7 @@ class TestUserSerializerModel(TestCase):
             "is_contributor": True,
             "is_editor": True,
             "is_blog_owner": False,
-            "password": "AmATestPasswordToday"
+            "password": "AmATestPasswordToday",
         }
 
         self._update_json = {
@@ -81,7 +82,9 @@ class TestUserSerializerModel(TestCase):
         serializer = UserSerializer(data=self._update_json, partial=True)
         serializer.is_valid()
 
-        instance = serializer.update(instance=user, validated_data=serializer.validated_data)
+        instance = serializer.update(
+            instance=user, validated_data=serializer.validated_data
+        )
 
         self.assertIsInstance(instance, User)
         self.assertEqual(instance.display_name, "email")

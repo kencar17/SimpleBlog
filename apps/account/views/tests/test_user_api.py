@@ -13,10 +13,7 @@ from rest_framework import status
 
 class TestUserEndpoint(TestCase):
 
-    fixtures = [
-        "tests/account.json",
-        "tests/user.json"
-    ]
+    fixtures = ["tests/account.json", "tests/user.json"]
 
     def setUp(self):
         self.client = Client()

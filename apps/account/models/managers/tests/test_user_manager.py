@@ -13,12 +13,10 @@ from apps.account.models import User, Account
 
 class TestUserManager(TestCase):
     """
-        Test User Model
+    Test User Model
     """
 
-    fixtures = [
-        "tests/account.json"
-    ]
+    fixtures = ["tests/account.json"]
 
     def setUp(self) -> None:
         self.account = Account.objects.first()
@@ -28,7 +26,9 @@ class TestUserManager(TestCase):
         Test User manager create.
         """
 
-        record = User.objects.create_user(username="email@email.com", password="MyPassword1234!", account=self.account)
+        record = User.objects.create_user(
+            username="email@email.com", password="MyPassword1234!", account=self.account
+        )
 
         self.assertIsInstance(record, User)
         self.assertEqual(record.username, "email@email.com")
@@ -40,7 +40,9 @@ class TestUserManager(TestCase):
 
         with self.assertRaises(ValueError) as e:
 
-            record = User.objects.create_user(username="", password="MyPassword1234!", account=self.account)
+            record = User.objects.create_user(
+                username="", password="MyPassword1234!", account=self.account
+            )
 
         self.assertEqual(str(e.exception), "The given username must be set")
 
@@ -50,9 +52,7 @@ class TestUserManager(TestCase):
         """
 
         record = User.objects.create_superuser(
-            username="email@email.com",
-            password="MyPassword1234!",
-            account=self.account
+            username="email@email.com", password="MyPassword1234!", account=self.account
         )
 
         self.assertIsInstance(record, User)
@@ -68,7 +68,7 @@ class TestUserManager(TestCase):
                 username="email@email.com",
                 password="MyPassword1234!",
                 account=self.account,
-                is_staff=False
+                is_staff=False,
             )
 
         self.assertEqual(str(e.exception), "Superuser must have is_staff=True.")
@@ -83,7 +83,7 @@ class TestUserManager(TestCase):
                 username="email@email.com",
                 password="MyPassword1234!",
                 account=self.account,
-                is_superuser=False
+                is_superuser=False,
             )
 
         self.assertEqual(str(e.exception), "Superuser must have is_superuser=True.")

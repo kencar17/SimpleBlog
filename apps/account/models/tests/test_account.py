@@ -13,12 +13,10 @@ from apps.account.models import Account
 
 class TestAccountModel(TestCase):
     """
-        Test Account Model
+    Test Account Model
     """
 
-    fixtures = [
-        "tests/account.json"
-    ]
+    fixtures = ["tests/account.json"]
 
     def setUp(self) -> None:
         self._account_json = {
@@ -33,7 +31,7 @@ class TestAccountModel(TestCase):
             "linkedin_link": "https://www.kencar.com",
             "snapchat_link": "https://www.kencar.com",
             "youtube_link": "https://www.kencar.com",
-            "twitch_link": "https://www.kencar.com"
+            "twitch_link": "https://www.kencar.com",
         }
 
     def test_account_creation(self):
