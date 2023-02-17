@@ -13,7 +13,7 @@ from apps.common.utilities.encryption import generate_secret_key
 
 class TestEncryption(TestCase):
     """
-        Test Encryption
+    Test Encryption
     """
 
     def test_generate_secret_key_default(self):

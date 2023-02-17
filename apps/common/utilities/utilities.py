@@ -48,5 +48,5 @@ def default_pagination(data: Union[list, dict]) -> dict:
         "current": 0,
         "previous": None,
         "next": None,
-        "results": data
+        "results": data,
     }

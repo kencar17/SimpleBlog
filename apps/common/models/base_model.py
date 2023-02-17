@@ -39,7 +39,7 @@ class BaseTable(Model):
         f = Fernet(DB_ENCRYPTION_KEY.encode())
         token = f.encrypt(value.encode())
 
-        return token.decode('utf-8')
+        return token.decode("utf-8")
 
     @staticmethod
     def decrypt(token: str) -> str:
@@ -51,7 +51,7 @@ class BaseTable(Model):
         f = Fernet(DB_ENCRYPTION_KEY.encode())
         value = f.decrypt(token.encode())
 
-        return value.decode('utf-8')
+        return value.decode("utf-8")
 
     # Override
     def save(self, *args, **kwargs) -> None:
