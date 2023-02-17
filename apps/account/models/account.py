@@ -33,54 +33,54 @@ class Account(BaseTable):
     )
 
     website_link = URLField(
-        max_length=DEFAULT_CHAR_LEN, default="", blank=True, help_text="Website Link."
+        max_length=DEFAULT_CHAR_LEN, blank=True, null=True, help_text="Website Link."
     )
     facebook_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Facebook Social Link.",
     )
     instagram_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Instagram Social Link.",
     )
     twitter_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Twitter Social Link.",
     )
     tiktok_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Tiktok Social Link.",
     )
     linkedin_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="LinkedIn Social Link.",
     )
     snapchat_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Snapchat Social Link.",
     )
     youtube_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Youtube Social Link.",
     )
     twitch_link = URLField(
         max_length=DEFAULT_CHAR_LEN,
-        default="",
         blank=True,
+        null=True,
         help_text="Twitch Social Link.",
     )
 

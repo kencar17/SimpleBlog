@@ -21,7 +21,8 @@ from apps.common.pagination.paginations import ApiPagination
 from apps.common.utilities.utilities import default_pagination, json_response
 
 
-# TODO - Account Filtering of users + Password reset Endpoint
+# TODO - Account Filtering of users
+# TODO - Password reset Endpoint
 
 
 class UserListLApi(ListCreateAPIView):

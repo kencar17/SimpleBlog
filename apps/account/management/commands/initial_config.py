@@ -33,23 +33,25 @@ class Command(BaseCommand):
             "contact_email": "email@email.com",
         }
 
+        account = Account.objects.create(**initial_account)
+        account.save()
+
+        password = User.objects.make_random_password(
+            length=16,
+            allowed_chars="abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789!@#$%^&*;:"
+        )
+
         initial_user = {
+            "account": account,
             "username": options["email"],
             "first_name": "First",
             "last_name": "Last",
             "is_staff": True,
             "is_superuser": True,
+            "password": password
         }
 
-        account = Account.create(param_dict=initial_account)
-        account.save()
-
-        initial_user["account"] = account
-
-        user = User.create(param_dict=initial_user)
-        password = User.objects.make_random_password()
-        user.account = account
-        user.set_password(raw_password=password)
+        user = User.objects.create(**initial_user)
         user.save()
 
         print(f"Initial Account Created with id: {account.id}")

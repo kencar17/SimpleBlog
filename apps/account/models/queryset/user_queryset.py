@@ -9,6 +9,7 @@ from django.db import models
 
 
 class UserQuerySet(models.QuerySet):
+
     def contributors(self):
         return self.filter(is_contributor=True)
 

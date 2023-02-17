@@ -16,15 +16,6 @@ class BaseTable(Model):
     class Meta:
         abstract = True
 
-    @classmethod
-    def create(cls, param_dict: dict = None):
-        obj = cls()
-
-        if param_dict is not None:
-            obj.set_values(param_dict)
-
-        return obj
-
     def set_values(self, pairs: dict) -> list:
         ret = []
 

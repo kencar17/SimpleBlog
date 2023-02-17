@@ -71,9 +71,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data) -> User:
         """
-        Create new user.
+        Create new user
         :param validated_data: user information
-        :return: user instance.
+        :return: user instance
         """
         allowed_chars = (
             "abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789!@#$%^&*;:"
@@ -82,6 +82,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         validated_data["password"] = User.objects.make_random_password(
             length=16, allowed_chars=allowed_chars
         )
+        validated_data["email"] = validated_data["username"]
         user = User.objects.create(**validated_data)
         user.save()
 
