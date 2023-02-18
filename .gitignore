@@ -240,3 +240,6 @@ cython_debug/
 .idea/
 
 .DS_Store
+
+apps/account/migrations/
+apps/authentication/migrations/

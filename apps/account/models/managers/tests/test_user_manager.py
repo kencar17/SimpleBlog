@@ -39,7 +39,6 @@ class TestUserManager(TestCase):
         """
 
         with self.assertRaises(ValueError) as e:
-
             record = User.objects.create_user(
                 username="", password="MyPassword1234!", account=self.account
             )

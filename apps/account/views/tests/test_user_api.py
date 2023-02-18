@@ -17,7 +17,6 @@ from apps.account.models import User
 
 
 class TestUserEndpoint(TestCase):
-
     fixtures = ["tests/account.json", "tests/user.json"]
 
     def setUp(self):

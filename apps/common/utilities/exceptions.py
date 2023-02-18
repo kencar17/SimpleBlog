@@ -29,7 +29,10 @@ def blog_exception_handler(exc, context):
             error=True,
         )
 
-    if response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_404_NOT_FOUND):
+    if response.status_code in (
+        status.HTTP_401_UNAUTHORIZED,
+        status.HTTP_404_NOT_FOUND,
+    ):
         exc = []
     else:
         exc = [exc]
