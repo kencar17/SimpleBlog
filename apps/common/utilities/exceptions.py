@@ -5,6 +5,7 @@ Authors: Kenneth Carmichael (kencar17)
 Date: January 16th 2023
 Version: 1.0
 """
+from rest_framework import status
 from rest_framework.views import exception_handler
 
 from apps.common.utilities.utilities import json_response
@@ -26,6 +27,15 @@ def blog_exception_handler(exc, context):
             message={"message": "Internal Server Error", "errors": []},
             error=True,
         )
+
+    if response.status_code == status.HTTP_401_UNAUTHORIZED:
+        response.data = {
+            "is_error": True,
+            "error": {"message": response.data.get("detail", ""), "errors": []},
+            "content": {},
+        }
+
+        return response
 
     response.data = {
         "is_error": True,

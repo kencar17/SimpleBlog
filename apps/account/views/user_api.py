@@ -11,6 +11,7 @@ from django.http import Http404
 from rest_framework import filters
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.account.models import User
 from apps.account.serializers.user_serializer import (
@@ -29,7 +30,7 @@ class UserListLApi(ListCreateAPIView):
     """
     Get a List of users bases on query params, or create a new user with auto gen password.
     """
-
+    authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["username", "display_name", "fist_name", "last_name", "bio"]
 
@@ -110,6 +111,7 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
     """
     Get, update, or delete individual user information.
     """
+    authentication_classes = [JWTAuthentication]
 
     def get_object(self):
         """

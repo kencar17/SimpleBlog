@@ -23,5 +23,4 @@ class TestUserEndpoint(TestCase):
     def test_get_users(self):
 
         response = self.client.get("/api/account/users")
-        print(response.status_code)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
