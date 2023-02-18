@@ -18,6 +18,7 @@ def blog_exception_handler(exc, context):
     :param context:
     :return:
     """
+
     # Call REST framework's default exception handler first, to get the standard error response.
     response = exception_handler(exc, context)
 
@@ -28,19 +29,16 @@ def blog_exception_handler(exc, context):
             error=True,
         )
 
-    if response.status_code == status.HTTP_401_UNAUTHORIZED:
-        response.data = {
-            "is_error": True,
-            "error": {"message": response.data.get("detail", ""), "errors": []},
-            "content": {},
-        }
-
-        return response
+    if response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_404_NOT_FOUND):
+        exc = []
+    else:
+        exc = [exc]
 
     response.data = {
         "is_error": True,
-        "error": {"message": response.data.get("detail", ""), "errors": [exc]},
+        "error": {"message": response.data.get("detail", ""), "errors": exc},
         "content": {},
     }
+    response.status_code = status.HTTP_200_OK
 
     return response

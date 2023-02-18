@@ -154,7 +154,6 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
             serializer.instance = serializer.update(
                 instance=self.get_object(), validated_data=serializer.validated_data
             )
-
         except ValidationError as e:
             message = {"user": f"User update failed: {str(e)}"}
             return json_response(message=message, error=True)
