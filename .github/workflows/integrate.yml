@@ -8,6 +8,19 @@ jobs:
 
   style:
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ "3.10" ]
+    env:
+      BLOG_SECRET_KEY: ${{ secrets.BLOG_SECRET_KEY }}
+      BLOG_SIGNING_KEY: ${{ secrets.BLOG_SIGNING_KEY }}
+      BLOG_DJANGO_DEBUG: ${{ secrets.BLOG_DJANGO_DEBUG }}
+      BLOG_DB_NAME: ${{ secrets.BLOG_DB_NAME }}
+      BLOG_USER: ${{ secrets.BLOG_USER }}
+      BLOG_PASSWORD: ${{ secrets.BLOG_PASSWORD }}
+      BLOG_HOST: ${{ secrets.BLOG_HOST }}
+      BLOG_PORT: ${{ secrets.BLOG_PORT }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -16,6 +29,19 @@ jobs:
 
   linting:
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ "3.10" ]
+    env:
+      BLOG_SECRET_KEY: ${{ secrets.BLOG_SECRET_KEY }}
+      BLOG_SIGNING_KEY: ${{ secrets.BLOG_SIGNING_KEY }}
+      BLOG_DJANGO_DEBUG: ${{ secrets.BLOG_DJANGO_DEBUG }}
+      BLOG_DB_NAME: ${{ secrets.BLOG_DB_NAME }}
+      BLOG_USER: ${{ secrets.BLOG_USER }}
+      BLOG_PASSWORD: ${{ secrets.BLOG_PASSWORD }}
+      BLOG_HOST: ${{ secrets.BLOG_HOST }}
+      BLOG_PORT: ${{ secrets.BLOG_PORT }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
