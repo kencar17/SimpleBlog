@@ -30,6 +30,7 @@ class UserListLApi(ListCreateAPIView):
     """
     Get a List of users bases on query params, or create a new user with auto gen password.
     """
+
     authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["username", "display_name", "fist_name", "last_name", "bio"]
@@ -111,6 +112,7 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
     """
     Get, update, or delete individual user information.
     """
+
     authentication_classes = [JWTAuthentication]
 
     def get_object(self):
