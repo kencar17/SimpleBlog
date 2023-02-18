@@ -20,6 +20,7 @@ jobs:
       BLOG_PASSWORD: ${{ secrets.BLOG_PASSWORD }}
       BLOG_HOST: ${{ secrets.BLOG_HOST }}
       BLOG_PORT: ${{ secrets.BLOG_PORT }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -30,6 +31,7 @@ jobs:
         pip install -r requirements.txt
     - run: black --diff --check $(git ls-files '*.py')
     - run: pylint --disable=all --enable=unused-import $(git ls-files '*.py')
+    - run: snyk test
     - name: Run Tests
       run: |
         python manage.py test
