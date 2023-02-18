@@ -32,6 +32,8 @@ jobs:
     - run: black --diff --check $(git ls-files '*.py')
     - run: pylint --disable=all --enable=unused-import $(git ls-files '*.py')
     - run: snyk test
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     - name: Run Tests
       run: |
         python manage.py test
