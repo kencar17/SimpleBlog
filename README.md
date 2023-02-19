@@ -22,14 +22,14 @@ Authentication:
 
 Authentication:
 - [x] ~~JWT Authentication~~
-- [ ] User Management Endpoint
-- [ ] Password Reset Endpoint
 - [ ] Oauth Auth?
 - [ ] MFA (Text, Email, Authenticator App)
-- [ ] Account or User
+- [ ] Account
 
 Account:
 - [X] ~~Account~~
+- [X] ~~User Management Endpoint~~
+- [X] ~~Password Reset Endpoint~~
 - [ ] Account Followers
 - [ ] Account Following
 

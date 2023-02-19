@@ -8,11 +8,13 @@ Version: 1.0
 import copy
 
 from django.test import TestCase
+from rest_framework import serializers
 
 from apps.account.models import Account, User
 from apps.account.serializers.user_serializer import (
     UserSerializer,
     CreateUserSerializer,
+    UserChangePasswordSerializer,
 )
 
 
@@ -91,3 +93,78 @@ class TestUserSerializerModel(TestCase):
         self.assertEqual(instance.first_name, "email")
         self.assertEqual(instance.last_name, "email")
         self.assertEqual(instance.bio, "Carmichael")
+
+    def test_user_serializer_password_change(self):
+        """
+        Test User Password Change Serializer
+        """
+        copied = copy.deepcopy(self._user_json)
+        copied["account"] = self.account
+        user = User.objects.create(**copied)
+        user.save()
+
+        data = {
+            "password_one": "K3nC@rIs!@wesom3!Too",
+            "password_two": "K3nC@rIs!@wesom3!Too",
+        }
+
+        serializer = UserChangePasswordSerializer(data=data)
+        serializer.is_valid()
+
+        instance = serializer.update(
+            instance=user, validated_data=serializer.validated_data
+        )
+
+        self.assertIsInstance(instance, User)
+
+    def test_user_serializer_password_change_error(self):
+        """
+        Test User Password Change Serializer
+        """
+        copied = copy.deepcopy(self._user_json)
+        copied["account"] = self.account
+        user = User.objects.create(**copied)
+        user.save()
+
+        data = {
+            "password_one": "PASApasswordonetwo",
+            "password_two": "PASApasswordonetwo",
+        }
+
+        serializer = UserChangePasswordSerializer(data=data)
+        serializer.is_valid()
+
+        with self.assertRaises(serializers.ValidationError) as e:
+            instance = serializer.update(
+                instance=user, validated_data=serializer.validated_data
+            )
+
+        expected = "{'password': [ErrorDetail(string='The password must contain at least 4 special character: !@#$%^&*;:', code='invalid')]}"
+
+        self.assertEqual(str(e.exception.detail), expected)
+
+    def test_user_serializer_password_change_not_the_same(self):
+        """
+        Test User Password Change Serializer
+        """
+        copied = copy.deepcopy(self._user_json)
+        copied["account"] = self.account
+        user = User.objects.create(**copied)
+        user.save()
+
+        data = {
+            "password_one": "K3nC@rIs!@wesom3!Too",
+            "password_two": "K3nC@rIs!@wesom3!Toocksdmldc",
+        }
+
+        serializer = UserChangePasswordSerializer(data=data)
+        serializer.is_valid()
+
+        with self.assertRaises(serializers.ValidationError) as e:
+            instance = serializer.update(
+                instance=user, validated_data=serializer.validated_data
+            )
+
+        expected = "{'password': [ErrorDetail(string='Passwords do not match', code='invalid')]}"
+
+        self.assertEqual(str(e.exception.detail), expected)

@@ -5,6 +5,7 @@ Alpha - 0.1 (TBA, 2023)
         - Add JWT Authentication
         - Add Encryption Utility
         - Add Secret Key Generation
+        - User Management Endpoints
     Change:
         -
     Fix:

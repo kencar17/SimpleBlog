@@ -351,3 +351,110 @@ class TestUserEndpoint(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertDictEqual(ret, expected)
+
+    def test_user_password_change(self):
+        """
+        Test user password change
+        :return:
+        """
+
+        user = User.objects.last()
+        data = {
+            "password_one": "K3nC@rIs!@wesom3!Too",
+            "password_two": "K3nC@rIs!@wesom3!Too",
+        }
+
+        response = self.client.put(
+            f"/api/account/users/{str(user.id)}/change_password", data=data
+        )
+        expected = {
+            "is_error": False,
+            "message": {},
+            "content": {"message": "User password has been changed."},
+        }
+        ret = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertDictEqual(ret, expected)
+
+    def test_user_password_change_404(self):
+        """
+        Test user password change
+        :return:
+        """
+
+        data = {
+            "password_one": "K3nC@rIs!@wesom3!Too",
+            "password_two": "K3nC@rIs!@wesom3!Too",
+        }
+
+        response = self.client.put(
+            f"/api/account/users/5b076883-8f47-4372-9089-7f2a9e68f69f/change_password",
+            data=data,
+        )
+        expected = {
+            "is_error": True,
+            "error": {"message": "Not found.", "errors": []},
+            "content": {},
+        }
+        ret = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertDictEqual(ret, expected)
+
+    def test_user_password_change_fail(self):
+        """
+        Test user password change missing field
+        :return:
+        """
+
+        user = User.objects.last()
+        data = {
+            "password_one": "K3nC@rIs!@wesom3!Too",
+        }
+
+        response = self.client.put(
+            f"/api/account/users/{str(user.id)}/change_password", data=data
+        )
+        expected = {
+            "is_error": True,
+            "message": {"password_two": ["This field is required."]},
+            "content": {},
+        }
+        ret = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertDictEqual(ret, expected)
+
+    def test_user_password_change_fail_password_reqs(self):
+        """
+        Test user password change does not meet requirements
+        :return:
+        """
+
+        user = User.objects.last()
+        data = {
+            "password_one": "amanpasswordorsomething",
+            "password_two": "amanpasswordorsomething",
+        }
+
+        response = self.client.put(
+            f"/api/account/users/{str(user.id)}/change_password", data=data
+        )
+        expected = {
+            "is_error": True,
+            "message": {
+                "message": "Password Change Failed",
+                "errors": {
+                    "password": [
+                        "The password must contain at least 4 uppercase letter, A-Z.",
+                        "The password must contain at least 4 special character: !@#$%^&*;:",
+                    ]
+                },
+            },
+            "content": {},
+        }
+        ret = json.loads(response.content)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertDictEqual(ret, expected)

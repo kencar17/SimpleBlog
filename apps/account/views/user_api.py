@@ -10,20 +10,24 @@ from django.db import IntegrityError
 from django.http import Http404
 from rest_framework import filters
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.account.models import User
 from apps.account.serializers.user_serializer import (
     UserSerializer,
     CreateUserSerializer,
+    UserChangePasswordSerializer,
 )
 from apps.common.pagination.paginations import ApiPagination
 from apps.common.utilities.utilities import default_pagination, json_response
 
 
 # TODO - Account Filtering of users
-# TODO - Password reset Endpoint
 
 
 class UserListLApi(ListCreateAPIView):
@@ -67,7 +71,7 @@ class UserListLApi(ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Get users for the system or an account.
+        Get users for the system or an account
         :param request: request
         :return: Json list of Users.
         """
@@ -124,6 +128,9 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
         except ObjectDoesNotExist:
             raise Http404
 
+        # May raise a permission denied
+        self.check_object_permissions(self.request, user)
+
         return user
 
     def get(self, request, *args, **kwargs):
@@ -174,3 +181,48 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
         user.save()
 
         return json_response(data={"message": "User has been deactivated."})
+
+
+class UserPasswordChangeApi(UpdateAPIView):
+    """
+    Update user password.
+    """
+
+    authentication_classes = [JWTAuthentication]
+
+    def get_object(self):
+        """
+        Returns the object the view is displaying.
+        """
+        try:
+            user = User.objects.get(pk=self.kwargs["pk"])
+        except ObjectDoesNotExist:
+            raise Http404
+
+        # May raise a permission denied
+        self.check_object_permissions(self.request, user)
+
+        return user
+
+    def put(self, request, *args, **kwargs):
+        """
+        Update user password.
+        :param request: request
+        :return: Success Message.
+        """
+
+        json_data = request.data
+        serializer = UserChangePasswordSerializer(data=json_data, many=False)
+
+        if not serializer.is_valid():
+            return json_response(message=serializer.errors, error=True)
+
+        try:
+            user = serializer.update(
+                instance=self.get_object(), validated_data=serializer.validated_data
+            )
+        except ValidationError as e:
+            message = {"message": "Password Change Failed", "errors": e.detail}
+            return json_response(message=message, error=True)
+
+        return json_response(data={"message": "User password has been changed."})

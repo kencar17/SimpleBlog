@@ -13,6 +13,8 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from apps.common.globals.database import MIN_PASSWORD_LENGTH
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -129,12 +131,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        'OPTIONS': {
+            'min_length': MIN_PASSWORD_LENGTH,
+        }
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+    {
+        'NAME': 'apps.account.validators.user_validators.UppercaseValidator',
+    },
+    {
+        'NAME': 'apps.account.validators.user_validators.SpecialCharValidator',
     },
 ]
 
