@@ -6,7 +6,6 @@ Date: February 8th 2023
 Version: 1.0
 """
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import IntegrityError
 from django.http import Http404
 from rest_framework import filters
 from rest_framework.exceptions import ValidationError
@@ -105,8 +104,8 @@ class UserListLApi(ListCreateAPIView):
 
         try:
             user = serializer.create(validated_data=serializer.validated_data)
-        except (ValidationError, IntegrityError) as e:
-            message = {"user": f"User creation failed: {str(e)}"}
+        except ValidationError as e:
+            message = {"message": "User creation Failed", "errors": e.detail}
             return json_response(message=message, error=True)
 
         return json_response(data=UserSerializer(user, many=False).data)
@@ -162,7 +161,7 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
                 instance=self.get_object(), validated_data=serializer.validated_data
             )
         except ValidationError as e:
-            message = {"user": f"User update failed: {str(e)}"}
+            message = {"message": "User update Failed", "errors": e.detail}
             return json_response(message=message, error=True)
 
         return json_response(data=serializer.data)

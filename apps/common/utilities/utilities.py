@@ -31,7 +31,7 @@ def json_response(
         message = {}
 
     return JsonResponse(
-        {"is_error": error, "message": message, "content": data},
+        {"is_error": error, "error": message, "content": data},
         status=http_status,
         safe=False,
     )

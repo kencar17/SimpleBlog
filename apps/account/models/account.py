@@ -7,7 +7,14 @@ Version: 1.0
 """
 import uuid
 
-from django.db.models import UUIDField, CharField, URLField, DateTimeField, EmailField
+from django.db.models import (
+    UUIDField,
+    CharField,
+    URLField,
+    DateTimeField,
+    EmailField,
+    BooleanField,
+)
 
 from apps.common.globals.database import DEFAULT_CHAR_LEN, MAX_CHAR_LEN
 from apps.common.models.base_model import BaseTable
@@ -24,9 +31,13 @@ class Account(BaseTable):
 
     id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_date = DateTimeField(auto_now=True, help_text="Date account was created.")
-    account_name = CharField(max_length=DEFAULT_CHAR_LEN, help_text="Account Name.")
+    account_name = CharField(
+        max_length=DEFAULT_CHAR_LEN, help_text="Account Name.", unique=True
+    )
     bio = CharField(
-        max_length=MAX_CHAR_LEN, help_text="Short description of the account."
+        max_length=MAX_CHAR_LEN,
+        help_text="Short description of the account.",
+        blank=True,
     )
     contact_email = EmailField(
         max_length=DEFAULT_CHAR_LEN, help_text="Account Contact Email."
@@ -83,6 +94,22 @@ class Account(BaseTable):
         null=True,
         help_text="Twitch Social Link.",
     )
+
+    is_active = BooleanField(
+        default=True,
+        help_text=(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+
+    def save(self, *args, **kwargs) -> None:
+        self.clean_fields()
+
+        if not self.bio:
+            self.bio = f"Am a blog for {self.account_name}"
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.account_name}"

@@ -5,6 +5,7 @@ Authors: Kenneth Carmichael (kencar17)
 Date: February 11th 2023
 Version: 1.0
 """
+import copy
 
 from django.test import TestCase
 
@@ -49,6 +50,19 @@ class TestAccountModel(TestCase):
 
         record = Account.objects.create(**self._account_json)
         self.assertIsInstance(record, Account)
+
+    def test_account_creation_full_empty_bio(self):
+        """
+        Test Account full Initialize with empty bio
+        """
+
+        copied = copy.deepcopy(self._account_json)
+        copied["bio"] = ""
+
+        record = Account.objects.create(**copied)
+        self.assertIsInstance(record, Account)
+        self.assertEqual(record.account_name, "Test Account")
+        self.assertEqual(record.bio, "Am a blog for Test Account")
 
     def test_account_creation_full_verbose(self):
         """

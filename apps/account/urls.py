@@ -8,7 +8,7 @@ Version: 1.0
 
 from django.urls import path
 
-from apps.account.views import user_api
+from apps.account.views import user_api, account_api
 
 urlpatterns = [
     # User Endpoints
@@ -18,5 +18,12 @@ urlpatterns = [
         "users/<uuid:pk>/change_password",
         user_api.UserPasswordChangeApi.as_view(),
         name="UserDetailApiV1",
+    ),
+    # Account Endpoints
+    path("accounts", account_api.AccountListLApi.as_view(), name="AccountListLApiV1"),
+    path(
+        "accounts/<uuid:pk>",
+        account_api.AccountDetailApi.as_view(),
+        name="AccountDetailApiV1",
     ),
 ]
