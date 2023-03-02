@@ -8,15 +8,9 @@ Version: 1.0
 import copy
 
 from django.test import TestCase
-from rest_framework import serializers
 
 from apps.account.models import Account, User
 from apps.account.serializers.account_serializer import CreateAccountSerializer
-from apps.account.serializers.user_serializer import (
-    UserSerializer,
-    CreateUserSerializer,
-    UserChangePasswordSerializer,
-)
 
 
 class TestAccountSerializerModel(TestCase):
