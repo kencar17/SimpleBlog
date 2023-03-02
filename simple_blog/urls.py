@@ -1,4 +1,4 @@
-"""SimpleBlog URL Configuration
+"""simple_blog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path("blog-site-admin", admin.site.urls),
-
-    path("api/", include("apps.authentication.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
+    path("api/auth/", include("apps.authentication.urls")),
+    path("api/account/", include("apps.account.urls")),
 ]

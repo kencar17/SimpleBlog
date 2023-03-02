@@ -34,8 +34,8 @@ class BlogTokenObtainPairView(TokenObtainPairView):
 
         try:
             serializer.is_valid(raise_exception=True)
-        except TokenError as e:
-            raise InvalidToken(e.args[0])
+        except TokenError as exe:
+            raise InvalidToken(exe.args[0]) from exe
 
         return json_response(data=serializer.validated_data)
 
@@ -59,7 +59,7 @@ class BlogTokenRefreshView(TokenRefreshView):
 
         try:
             serializer.is_valid(raise_exception=True)
-        except TokenError as e:
-            raise InvalidToken(e.args[0])
+        except TokenError as exe:
+            raise InvalidToken(exe.args[0]) from exe
 
         return json_response(data=serializer.validated_data)

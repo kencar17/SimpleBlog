@@ -16,6 +16,8 @@ def generate_secret_key(length: int = 50) -> str:
     chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)"
 
     if length < 50:
-        raise ValueError("The 'length' is too small, must be greater then or equal to 50.")
+        raise ValueError(
+            "The 'length' is too small, must be greater then or equal to 50."
+        )
 
     return get_random_string(length=length, allowed_chars=chars)

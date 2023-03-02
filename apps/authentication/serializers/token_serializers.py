@@ -17,6 +17,12 @@ class BlogTokenObtainPairSerializer(TokenObtainSerializer):
     Blog Token Obtain Pair Serializer
     """
 
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
     token_class = RefreshToken
 
     def validate(self, attrs):
@@ -41,6 +47,12 @@ class BlogTokenRefreshSerializer(serializers.Serializer):
     """
     Blog Token Refresh Serializer
     """
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
 
     refresh = serializers.CharField()
     access = serializers.CharField(read_only=True)

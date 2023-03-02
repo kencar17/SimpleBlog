@@ -21,15 +21,32 @@ Authentication:
 ## To-dos
 
 Authentication:
-- User Management Endpoint
-- Password Reset Endpoint
-- Oauth Auth?
-- MFA (Text, Email, Authenticator App)
-- Account or User
+- [x] ~~JWT Authentication~~
+- [ ] Oauth Auth?
+- [ ] MFA (Text, Email, Authenticator App)
+- [ ] Account
+
+Account:
+- [X] ~~Account~~
+- [X] ~~User Management Endpoint~~
+- [X] ~~Password Reset Endpoint~~
+- [ ] Account Followers
+- [ ] Account Following
 
 Blog:
-- Blog Management Endpoint
-- Tie Blog to User or Account
+- [ ] Blog Management Endpoint
+- [ ] Tie Blog to User or Account
+- [ ] Comments
+- [ ] Categories
+- [ ] Tags
+
+Notifications:
+- [ ] Push Notifications
+- [ ] Email Notifications
+- [ ] Text Notification
+
+Other:
+- [X] Secret Key Generation
 
 ## Getting Started
 
