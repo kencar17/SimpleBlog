@@ -9,17 +9,19 @@ Version: 1.0
 from cryptography.fernet import Fernet
 from django.db.models import Model
 
-from SimpleBlog.settings import DB_ENCRYPTION_KEY
+from simple_blog.settings import DB_ENCRYPTION_KEY
 
 
 class BaseTable(Model):
     """
     Base Table Class
     """
+
     class Meta:
         """
         Meta Class
         """
+
         abstract = True
 
     def set_values(self, pairs: dict) -> list:

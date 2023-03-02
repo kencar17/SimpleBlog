@@ -26,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
         """
         Meta for Serializer
         """
+
         model = User
         fields = [
             "id",
@@ -66,6 +67,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         """
         Meta for Serializer
         """
+
         model = User
         fields = [
             "account",

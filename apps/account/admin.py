@@ -18,6 +18,7 @@ class MainUserAdmin(UserAdmin):
     """
     User Admin Config
     """
+
     model = User
 
     list_display = (
@@ -81,6 +82,7 @@ class MainAccountAdmin(ModelAdmin):
     """
     Account Admin Config
     """
+
     model = Account
 
     list_display = ("created_date", "account_name", "contact_email")

@@ -15,6 +15,7 @@ class UserManager(BaseUserManager):
     """
     Custom User Manager
     """
+
     use_in_migrations = True
 
     def _create_user(self, username, password, **extra_fields):
