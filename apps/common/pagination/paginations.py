@@ -1,6 +1,7 @@
 """
 Module for custom pagination for api responses.
-This module sets the pagination parameters, limitations, and response structure for the project. Any pagination
+This module sets the pagination parameters, limitations, and response
+structure for the project. Any pagination
 should follow this structure.
 Authors: Kenneth Carmichael (kencar17)
 Date: January 26th 2023

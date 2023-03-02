@@ -1,3 +1,13 @@
+"""
+Module for Project Globals.
+This module contains globals for the project, these should be avoided as must as
+possible.
+structure for the project. Any pagination
+should follow this structure.
+Authors: Kenneth Carmichael (kencar17)
+Date: January 26th 2023
+Version: 1.0
+"""
 ZERO = 0
 ONE_HUNDRED = 100
 DEFAULT_CHAR_LEN = 250

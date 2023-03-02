@@ -13,10 +13,21 @@ from SimpleBlog.settings import DB_ENCRYPTION_KEY
 
 
 class BaseTable(Model):
+    """
+    Base Table Class
+    """
     class Meta:
+        """
+        Meta Class
+        """
         abstract = True
 
     def set_values(self, pairs: dict) -> list:
+        """
+        Set values for model object
+        :param pairs:
+        :return:
+        """
         ret = []
 
         for key, value in pairs.items():
@@ -36,8 +47,8 @@ class BaseTable(Model):
         :return: Encrypted Value
         """
 
-        f = Fernet(DB_ENCRYPTION_KEY.encode())
-        token = f.encrypt(value.encode())
+        fernet_encrypt = Fernet(DB_ENCRYPTION_KEY.encode())
+        token = fernet_encrypt.encrypt(value.encode())
 
         return token.decode("utf-8")
 
@@ -48,12 +59,18 @@ class BaseTable(Model):
         :param token: Token to be decrypted
         :return: Decrypted Value
         """
-        f = Fernet(DB_ENCRYPTION_KEY.encode())
-        value = f.decrypt(token.encode())
+        fernet_encrypt = Fernet(DB_ENCRYPTION_KEY.encode())
+        value = fernet_encrypt.decrypt(token.encode())
 
         return value.decode("utf-8")
 
     # Override
     def save(self, *args, **kwargs) -> None:
+        """
+        Save
+        :param args:
+        :param kwargs:
+        :return:
+        """
         self.clean_fields()
         super().save(*args, **kwargs)

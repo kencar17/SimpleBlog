@@ -1,6 +1,7 @@
 """
 Module for custom exception handler.
-This module determines all api endpoints for contact model. Supported methods are Get, Post, Put, and Delete.
+This module determines all api endpoints for contact model. Supported
+methods are Get, Post, Put, and Delete.
 Authors: Kenneth Carmichael (kencar17)
 Date: January 16th 2023
 Version: 1.0
