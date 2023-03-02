@@ -12,7 +12,16 @@ from apps.account.models import Account, User
 
 
 class Command(BaseCommand):
+    """
+    Django Management command to initialize the project
+    """
+
     def add_arguments(self, parser):
+        """
+        Add arguements for the command
+        :param parser:
+        :return:
+        """
         parser.add_argument(
             "email",
             type=str,
@@ -21,7 +30,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options) -> None:
         """
-        Generate secret keys for project.
+        Generate secret keys for project
         :param args:
         :param options:
         :return:

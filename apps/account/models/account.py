@@ -20,8 +20,8 @@ from apps.common.globals.database import DEFAULT_CHAR_LEN, MAX_CHAR_LEN
 from apps.common.models.base_model import BaseTable
 
 
-# TODO - Encrypting and Decrypting database fields
-# TODO - Hwo to work caching look ups with redis
+# TODO: Encrypting and Decrypting database fields
+# TODO: Hwo to work caching look ups with redis
 
 
 class Account(BaseTable):

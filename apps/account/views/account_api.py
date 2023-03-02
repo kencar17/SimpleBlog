@@ -1,6 +1,7 @@
 """
 Module for Account Api Endpoints.
-This module determines all api endpoints for account model. Supported methods are Get, Post, Put, and Delete.
+This module determines all api endpoints for account model. Supported methods are Get,
+Post, Put, and Delete.
 Authors: Kenneth Carmichael (kencar17)
 Date: February 26th 2023
 Version: 1.0
@@ -66,8 +67,8 @@ class AccountListLApi(ListCreateAPIView):
 
         try:
             user = serializer.create(validated_data=serializer.validated_data)
-        except ValidationError as e:
-            message = {"message": "Account Creation Failed", "errors": e.detail}
+        except ValidationError as exc:
+            message = {"message": "Account Creation Failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
         return json_response(data=AccountSerializer(user, many=False).data)
@@ -86,8 +87,8 @@ class AccountDetailApi(RetrieveUpdateDestroyAPIView):
         """
         try:
             account = Account.objects.get(pk=self.kwargs["pk"])
-        except ObjectDoesNotExist:
-            raise Http404
+        except ObjectDoesNotExist as exc:
+            raise Http404 from exc
 
         # May raise a permission denied
         self.check_object_permissions(self.request, account)
@@ -122,8 +123,8 @@ class AccountDetailApi(RetrieveUpdateDestroyAPIView):
             serializer.instance = serializer.update(
                 instance=self.get_object(), validated_data=serializer.validated_data
             )
-        except ValidationError as e:
-            message = {"message": "Account update failed", "errors": e.detail}
+        except ValidationError as exc:
+            message = {"message": "Account update failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
         return json_response(data=serializer.data)

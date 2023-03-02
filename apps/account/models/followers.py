@@ -13,9 +13,9 @@ from apps.account.models import Account
 from apps.common.models.base_model import BaseTable
 
 
-# TODO - Account Followers
-# TODO - Account Following
-# TODO - Encrypting and Decrypting database fields
+# TODO: Account Followers
+# TODO: Account Following
+# TODO: Encrypting and Decrypting database fields
 
 
 class Followers(BaseTable):

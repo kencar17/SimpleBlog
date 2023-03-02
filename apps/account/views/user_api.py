@@ -1,6 +1,7 @@
 """
 Module for User Api Endpoints.
-This module determines all api endpoints for user model. Supported methods are Get, Post, Put, and Delete.
+This module determines all api endpoints for user model. Supported methods are
+Get, Post, Put, and Delete.
 Authors: Kenneth Carmichael (kencar17)
 Date: February 8th 2023
 Version: 1.0
@@ -26,7 +27,7 @@ from apps.common.pagination.paginations import ApiPagination
 from apps.common.utilities.utilities import default_pagination, json_response
 
 
-# TODO - Account Filtering of users
+# TODO: Account Filtering of users
 
 
 class UserListLApi(ListCreateAPIView):
@@ -104,8 +105,8 @@ class UserListLApi(ListCreateAPIView):
 
         try:
             user = serializer.create(validated_data=serializer.validated_data)
-        except ValidationError as e:
-            message = {"message": "User creation Failed", "errors": e.detail}
+        except ValidationError as exc:
+            message = {"message": "User creation Failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
         return json_response(data=UserSerializer(user, many=False).data)
@@ -124,8 +125,8 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
         """
         try:
             user = User.objects.get(pk=self.kwargs["pk"])
-        except ObjectDoesNotExist:
-            raise Http404
+        except ObjectDoesNotExist as exc:
+            raise Http404 from exc
 
         # May raise a permission denied
         self.check_object_permissions(self.request, user)
@@ -160,8 +161,8 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
             serializer.instance = serializer.update(
                 instance=self.get_object(), validated_data=serializer.validated_data
             )
-        except ValidationError as e:
-            message = {"message": "User update Failed", "errors": e.detail}
+        except ValidationError as exc:
+            message = {"message": "User update Failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
         return json_response(data=serializer.data)
@@ -195,8 +196,8 @@ class UserPasswordChangeApi(UpdateAPIView):
         """
         try:
             user = User.objects.get(pk=self.kwargs["pk"])
-        except ObjectDoesNotExist:
-            raise Http404
+        except ObjectDoesNotExist as exc:
+            raise Http404 from exc
 
         # May raise a permission denied
         self.check_object_permissions(self.request, user)
@@ -217,11 +218,11 @@ class UserPasswordChangeApi(UpdateAPIView):
             return json_response(message=serializer.errors, error=True)
 
         try:
-            user = serializer.update(
+            _ = serializer.update(
                 instance=self.get_object(), validated_data=serializer.validated_data
             )
-        except ValidationError as e:
-            message = {"message": "Password Change Failed", "errors": e.detail}
+        except ValidationError as exc:
+            message = {"message": "Password Change Failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
         return json_response(data={"message": "User password has been changed."})

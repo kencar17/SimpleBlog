@@ -14,7 +14,7 @@ from apps.account.models import User
 from apps.common.globals.database import MIN_PASSWORD_LENGTH
 
 
-# TODO - Send invite link to user via email to setup password and MFA?
+# TODO: Send invite link to user via email to setup password and MFA?
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,6 +23,9 @@ class UserSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
+        """
+        Meta for Serializer
+        """
         model = User
         fields = [
             "id",
@@ -60,6 +63,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
     """
 
     class Meta:
+        """
+        Meta for Serializer
+        """
         model = User
         fields = [
             "account",
@@ -100,6 +106,14 @@ class UserChangePasswordSerializer(serializers.Serializer):
     password_one = CharField(help_text="Password to change to.")
     password_two = CharField(help_text="Confirm Password.")
 
+    def create(self, validated_data):
+        """
+        No implemented
+        :param validated_data: None
+        :return:
+        """
+        return validated_data
+
     def update(self, instance: User, validated_data):
         """
 
@@ -107,14 +121,14 @@ class UserChangePasswordSerializer(serializers.Serializer):
         :param validated_data:
         :return:
         """
-        errors = dict()
+        errors = {}
         password_errors = []
 
         try:
             # validate the password and catch the exception
             validate_password(password=validated_data["password_one"], user=instance)
-        except ValidationError as e:
-            password_errors.extend(list(e.messages))
+        except ValidationError as exc:
+            password_errors.extend(list(exc.messages))
 
         if validated_data["password_one"] != validated_data["password_two"]:
             password_errors.append("Passwords do not match")

@@ -10,16 +10,15 @@ import re
 from django.core.exceptions import ValidationError
 
 
-class UppercaseValidator(object):
+class UppercaseValidator:
     """
     The password must contain at least 1 uppercase letter, A-Z.
     """
 
     def validate(self, password, user=None):
         """
-
-        :param password:
-        :param user:
+        Validate user password for uppercase.
+        :param password: password str
         :return:
         """
         chars = re.findall("[A-Z]", password)
@@ -38,18 +37,24 @@ class UppercaseValidator(object):
 
     def get_help_text(self):
         """
-
+        Get help text for validator
         :return:
         """
         return "Your password must contain at least 4 uppercase letter, A-Z."
 
 
-class SpecialCharValidator(object):
+class SpecialCharValidator:
     """
     The password must contain at least 1 special character!@#$%^&*;:
     """
 
     def validate(self, password, user=None):
+        """
+        Validate user password for special characters.
+        :param user: None
+        :param password: password str
+        :return:
+        """
         chars = re.findall("[!@#$%^&*;:]", password)
 
         if not chars:
@@ -65,4 +70,8 @@ class SpecialCharValidator(object):
             )
 
     def get_help_text(self):
+        """
+        Get help text for validator
+        :return:
+        """
         return "Your password must contain at least 4 special character: !@#$%^&*;:"

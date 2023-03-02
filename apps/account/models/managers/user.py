@@ -12,6 +12,9 @@ from apps.account.models.queryset.user_queryset import UserQuerySet
 
 
 class UserManager(BaseUserManager):
+    """
+    Custom User Manager
+    """
     use_in_migrations = True
 
     def _create_user(self, username, password, **extra_fields):
@@ -49,13 +52,29 @@ class UserManager(BaseUserManager):
         return self._create_user(username, password, **extra_fields)
 
     def get_queryset(self):
+        """
+        Get Queryset and set a default select related for user and account
+        :return:
+        """
         return UserQuerySet(self.model, using=self._db).select_related("account")
 
     def contributors(self):
+        """
+        Get all contributors for a account
+        :return: Queryset
+        """
         return self.get_queryset().contributors()
 
     def editors(self):
+        """
+        Get all editors for a account
+        :return: Queryset
+        """
         return self.get_queryset().editors()
 
     def blog_owners(self):
+        """
+        Get all owners for a account
+        :return: Queryset
+        """
         return self.get_queryset().blog_owners()

@@ -1,3 +1,11 @@
+"""
+Module for Account App Admin Config.
+This module django Account App Admin File.
+Authors: Kenneth Carmichael (kencar17)
+Date: February 26th 2023
+Version: 1.0
+"""
+
 from django.contrib.admin import register, ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 
@@ -7,6 +15,9 @@ from apps.account.models import User, Account
 # Register your models here.
 @register(User)
 class MainUserAdmin(UserAdmin):
+    """
+    User Admin Config
+    """
     model = User
 
     list_display = (
@@ -67,6 +78,9 @@ class MainUserAdmin(UserAdmin):
 
 @register(Account)
 class MainAccountAdmin(ModelAdmin):
+    """
+    Account Admin Config
+    """
     model = Account
 
     list_display = ("created_date", "account_name", "contact_email")
@@ -75,5 +89,5 @@ class MainAccountAdmin(ModelAdmin):
     ordering = ("-created_date", "account_name")
 
     def get_queryset(self, request):
-        qs = super(MainAccountAdmin, self).get_queryset(request)
-        return qs.select_related()
+        query_set = super().get_queryset(request)
+        return query_set.select_related()
