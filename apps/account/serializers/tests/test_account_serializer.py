@@ -9,7 +9,7 @@ import copy
 
 from django.test import TestCase
 
-from apps.account.models import Account, User
+from apps.account.models import Account
 from apps.account.serializers.account_serializer import CreateAccountSerializer
 
 
