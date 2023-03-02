@@ -1,6 +1,7 @@
 """
 Module for Generate Keys Command.
-This module will be a management command that will generate the necessary secret keys for the project.
+This module will be a management command that will generate the necessary
+secret keys for the project.
 Authors: Kenneth Carmichael (kencar17)
 Date: January 29th 2023
 Version: 1.0
@@ -13,7 +14,16 @@ from apps.common.utilities.encryption import generate_secret_key
 
 
 class Command(BaseCommand):
+    """
+    Django Management Command
+    """
+
     def add_arguments(self, parser):
+        """
+        Add arguments to the command.
+        :param parser:
+        :return:
+        """
         parser.add_argument(
             "--secret_key",
             nargs="?",
