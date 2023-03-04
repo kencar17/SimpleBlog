@@ -24,7 +24,6 @@ Authentication:
 - [x] ~~JWT Authentication~~
 - [ ] Oauth Auth?
 - [ ] MFA (Text, Email, Authenticator App)
-- [ ] Account
 
 Account:
 - [X] ~~Account~~
