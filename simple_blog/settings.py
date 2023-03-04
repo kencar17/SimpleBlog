@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "apps.account.apps.AccountConfig",
     "apps.authentication.apps.AuthenticationConfig",
+    "apps.blog.apps.AuthenticationConfig",
 ]
 
 MIDDLEWARE = [
