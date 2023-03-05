@@ -36,8 +36,11 @@ Blog:
 - [ ] Blog Management Endpoint
 - [ ] Tie Blog to User or Account
 - [ ] Comments
-- [ ] Categories
+- [X] ~~Categories~~
 - [ ] Tags
+
+Comments:
+- [ ] Comments
 
 Notifications:
 - [ ] Push Notifications
@@ -46,6 +49,7 @@ Notifications:
 
 Other:
 - [X] Secret Key Generation
+- [X] Search?
 
 ## Getting Started
 

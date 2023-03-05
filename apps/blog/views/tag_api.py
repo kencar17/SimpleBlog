@@ -1,9 +1,9 @@
 """
-Module for Category Api Endpoints.
-This module determines all api endpoints for category model. Supported methods are Get,
+Module for Tag Api Endpoints.
+This module determines all api endpoints for tag model. Supported methods are Get,
 Post, Put, and Delete.
 Authors: Kenneth Carmichael (kencar17)
-Date: March 3rd 2023
+Date: March 4th 2023
 Version: 1.0
 """
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,16 +13,14 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from apps.blog.models import Category
-from apps.blog.serializers.category_serializer import (
-    CategorySerializer,
-    CreateCategorySerializer,
-)
+from apps.blog.models import Tag
+from apps.blog.serializers.tag_serializer import TagSerializer, CreateTagSerializer
+
 from apps.common.pagination.paginations import ApiPagination
 from apps.common.utilities.utilities import json_response, default_pagination
 
 
-class CategoryListLApi(ListCreateAPIView):
+class TagListLApi(ListCreateAPIView):
     """
     Get a List of users bases on query params, or create a new account.
     """
@@ -30,23 +28,13 @@ class CategoryListLApi(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["name", "description"]
-
-    def get_queryset(self):
-        """
-        This view should return a list of all users and perform any additional filtering.
-        """
-        categories = Category.objects.all().order_by("-created_date", "name")
-
-        if "category" in self.request.query_params:
-            categories = categories.filter(parent=self.request.query_params["category"])
-
-        return categories
+    queryset = Tag.objects.all().order_by("-created_date", "name")
 
     def get(self, request, *args, **kwargs):
         """
-        Get Categories for the system
+        Get Tags for the system
         :param request: request
-        :return: Json list of categories.
+        :return: Json list of tags.
         """
 
         queryset = self.get_queryset()
@@ -55,22 +43,22 @@ class CategoryListLApi(ListCreateAPIView):
         page = pagination.paginate_queryset(queryset=queryset, request=request)
 
         if not page:
-            serializer = CategorySerializer(queryset, many=True)
+            serializer = TagSerializer(queryset, many=True)
             return json_response(data=default_pagination(data=serializer.data))
 
-        serializer = CategorySerializer(page, many=True)
+        serializer = TagSerializer(page, many=True)
 
         return json_response(data=pagination.get_paginated_response(serializer.data))
 
     def post(self, request, *args, **kwargs):
         """
-        Create a new category.
+        Create a new tag.
         :param request: request
-        :return: Json of category.
+        :return: Json of tag.
         """
 
         json_data = request.data
-        serializer = CreateCategorySerializer(data=json_data, many=False)
+        serializer = CreateTagSerializer(data=json_data, many=False)
 
         if not serializer.is_valid():
             return json_response(message=serializer.errors, error=True)
@@ -81,10 +69,10 @@ class CategoryListLApi(ListCreateAPIView):
             message = {"message": "Creation Failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
-        return json_response(data=CategorySerializer(user, many=False).data)
+        return json_response(data=TagSerializer(user, many=False).data)
 
 
-class CategoryDetailApi(RetrieveUpdateDestroyAPIView):
+class TagDetailApi(RetrieveUpdateDestroyAPIView):
     """
     Get, update, or delete individual category information.
     """
@@ -96,37 +84,35 @@ class CategoryDetailApi(RetrieveUpdateDestroyAPIView):
         Returns the object the view is displaying.
         """
         try:
-            category = Category.objects.select_related("parent").get(
-                pk=self.kwargs["pk"]
-            )
+            tag = Tag.objects.get(pk=self.kwargs["pk"])
         except ObjectDoesNotExist as exc:
             raise Http404 from exc
 
         # May raise a permission denied
-        self.check_object_permissions(self.request, category)
+        self.check_object_permissions(self.request, tag)
 
-        return category
+        return tag
 
     def get(self, request, *args, **kwargs):
         """
-        Get category information.
+        Get tag information.
         :param request: request
-        :return: category Json.
+        :return: tag Json.
         """
 
-        serializer = CategorySerializer(self.get_object(), many=False)
+        serializer = TagSerializer(self.get_object(), many=False)
 
         return json_response(data=serializer.data)
 
     def put(self, request, *args, **kwargs):
         """
-        Update Category Information.
+        Update tag Information.
         :param request: request
-        :return: Category json.
+        :return: tag json.
         """
 
         json_data = request.data
-        serializer = CategorySerializer(data=json_data, many=False, partial=True)
+        serializer = TagSerializer(data=json_data, many=False, partial=True)
 
         if not serializer.is_valid():
             return json_response(message=serializer.errors, error=True)
@@ -143,12 +129,11 @@ class CategoryDetailApi(RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         """
-        Delete Category
+        Delete tag
         :param request: request
         :return: Message indicating Success
         """
-        # TODO: How to do delete childs of parents
-        category = self.get_object()
-        category.delete()
+        tag = self.get_object()
+        tag.delete()
 
-        return json_response(data={"message": "category has been deleted."})
+        return json_response(data={"message": "tag has been deleted."})

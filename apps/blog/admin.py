@@ -8,10 +8,7 @@ Version: 1.0
 
 from django.contrib.admin import register, ModelAdmin
 
-from apps.blog.models import Category
-
-
-# Register your models here.
+from apps.blog.models import Category, Tag
 
 
 @register(Category)
@@ -31,3 +28,17 @@ class MainCategoryAdmin(ModelAdmin):
     def get_queryset(self, request):
         query_set = super().get_queryset(request)
         return query_set.select_related("parent")
+
+
+@register(Tag)
+class MainTagAdmin(ModelAdmin):
+    """
+    Tag Admin Config
+    """
+
+    model = Tag
+
+    list_display = ("created_date", "name", "description", "slug")
+    list_filter = ("name",)
+    search_fields = ("name", "description")
+    ordering = ("-created_date", "name")

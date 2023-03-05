@@ -1,8 +1,8 @@
 """
-Category database Model.
-This module will contain functions and fields for Category Model.
+Tag database Model.
+This module will contain functions and fields for Tag Model.
 Authors: Kenneth Carmichael (kencar17)
-Date: March 3rd 2023
+Date: March 4th 2023
 Version: 1.0
 """
 import uuid
@@ -12,8 +12,6 @@ from django.db.models import (
     CharField,
     DateTimeField,
     SlugField,
-    ForeignKey,
-    PROTECT,
 )
 from django.template.defaultfilters import slugify
 from django.utils import timezone
@@ -22,36 +20,27 @@ from apps.common.globals.database import DEFAULT_CHAR_LEN, MIN_CHAR_LEN
 from apps.common.models.base_model import BaseTable
 
 
-class Category(BaseTable):
+class Tag(BaseTable):
     """
-    Category Model
+    Tag Model
     """
 
     id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created_date = DateTimeField(auto_now=True, help_text="Date category was created.")
-    updated_date = DateTimeField(help_text="Date category was updated.", null=True, blank=True)
+    created_date = DateTimeField(auto_now=True, help_text="Date tag was created.")
+    updated_date = DateTimeField(help_text="Date tag was updated.", null=True, blank=True)
     name = CharField(
         unique=True,
         default="",
         max_length=MIN_CHAR_LEN,
-        help_text="Category Name.",
+        help_text="Tag Name.",
     )
     description = CharField(
-        max_length=DEFAULT_CHAR_LEN, help_text="Description or summary of the category."
+        max_length=DEFAULT_CHAR_LEN, help_text="Description or summary of the tag."
     )
     slug = SlugField(
         unique=True,
         max_length=MIN_CHAR_LEN,
-        help_text="Description or summary of the category.",
-        blank=True,
-    )
-
-    parent = ForeignKey(
-        "Category",
-        on_delete=PROTECT,
-        help_text="A reference to another category model that represents the "
-        "parent category, if the category is a subcategory of another category.",
-        null=True,
+        help_text="Description or summary of the tag.",
         blank=True,
     )
 
