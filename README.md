@@ -35,12 +35,19 @@ Account:
 Blog:
 - [X] ~~Blog Management Endpoint~~
 - [X] ~~Tie Blog to User or Account~~
-- [ ] Comments
 - [X] ~~Categories~~
 - [X] ~~Tags~~
 
 Comments:
 - [ ] Comments
+
+Grammarly:
+- [ ] Grammarly Integration
+
+ChatGPT/OpenAI:
+- [ ] Blog Assistant/Helper
+- [ ] Blog Catch Phrases
+- [ ] Blog Social Media Generator
 
 Notifications:
 - [ ] Push Notifications
