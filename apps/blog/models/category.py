@@ -29,7 +29,9 @@ class Category(BaseTable):
 
     id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_date = DateTimeField(auto_now=True, help_text="Date category was created.")
-    updated_date = DateTimeField(help_text="Date category was updated.", null=True, blank=True)
+    updated_date = DateTimeField(
+        help_text="Date category was updated.", null=True, blank=True
+    )
     name = CharField(
         unique=True,
         default="",

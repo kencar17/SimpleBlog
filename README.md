@@ -33,11 +33,11 @@ Account:
 - [ ] Account Following
 
 Blog:
-- [ ] Blog Management Endpoint
-- [ ] Tie Blog to User or Account
+- [X] ~~Blog Management Endpoint~~
+- [X] ~~Tie Blog to User or Account~~
 - [ ] Comments
 - [X] ~~Categories~~
-- [ ] Tags
+- [X] ~~Tags~~
 
 Comments:
 - [ ] Comments
@@ -48,8 +48,8 @@ Notifications:
 - [ ] Text Notification
 
 Other:
-- [X] Secret Key Generation
-- [X] Search?
+- [X] ~~Secret Key Generation~~
+- [ ] Search?
 
 ## Getting Started
 
