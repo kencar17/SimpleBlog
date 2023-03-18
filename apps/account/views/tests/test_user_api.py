@@ -258,9 +258,7 @@ class TestUserEndpoint(TestCase):
         :return:
         """
 
-        response = self.client.get(
-            f"/api/users/5b076883-8f47-4372-9089-7f2a9e68f69f"
-        )
+        response = self.client.get(f"/api/users/5b076883-8f47-4372-9089-7f2a9e68f69f")
         expected = {
             "is_error": True,
             "error": {"message": "Not found.", "errors": []},

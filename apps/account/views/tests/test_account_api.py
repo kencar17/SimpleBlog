@@ -168,9 +168,7 @@ class TestAccountEndpoint(TestCase):
             "bio": "Kenneth Carmichael Blog Endpoint",
         }
 
-        response = self.client.put(
-            f"/api/accounts/{str(self.account.id)}", data=data
-        )
+        response = self.client.put(f"/api/accounts/{str(self.account.id)}", data=data)
         expected = {
             "is_error": False,
             "error": {},
@@ -208,9 +206,7 @@ class TestAccountEndpoint(TestCase):
             "bio": f"{'*'*1000}",
         }
 
-        response = self.client.put(
-            f"/api/accounts/{str(self.account.id)}", data=data
-        )
+        response = self.client.put(f"/api/accounts/{str(self.account.id)}", data=data)
         expected = {
             "is_error": True,
             "error": {"bio": ["Ensure this field has no more than 500 characters."]},
