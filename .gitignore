@@ -244,3 +244,4 @@ cython_debug/
 apps/account/migrations/
 apps/authentication/migrations/
 apps/blog/migrations/
+apps/comments/migrations/
