@@ -10,6 +10,7 @@ Alpha - 0.1 (TBA, 2023)
         - Add Blog Post Endpoints
         - Add Tag Endpoints
         - Add Category Endpoints
+        - Add Comment Endpoints
     Change:
         -
     Fix:
