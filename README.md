@@ -48,6 +48,7 @@ ChatGPT/OpenAI:
 - [ ] Blog Assistant/Helper
 - [ ] Blog Catch Phrases
 - [ ] Blog Social Media Generator
+- [ ] Blog Categories & Tag Suggestions 
 
 Notifications:
 - [ ] Push Notifications
@@ -60,7 +61,7 @@ Other:
 
 ## Getting Started
 
-You can get started with Simple Blog immediately on the Amplication Cloud. 
+You can get started with Simple Blog immediately on the Kencar Cloud. 
 
 Alternatively you can set up a local development environment.
 
