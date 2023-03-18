@@ -34,7 +34,7 @@ class TestAccountEndpoint(TestCase):
         :return:
         """
 
-        response = self.client.get("/api/account/accounts")
+        response = self.client.get("/api/accounts")
         expected = b'{"is_error": false, "error": {}, "content": {"count": 1, "pages": 1, "current": 1, "previous": null, "next": null, "results": [{"id": "5b076883-8f47-4372-9089-7f2a9e68f69f", "created_date": "2023-02-04T07:52:25.141000Z", "account_name": "New Star Blog", "bio": "Personal Blog", "contact_email": "kc@kencar.ca", "website_link": "", "facebook_link": "", "instagram_link": "", "twitter_link": "", "tiktok_link": "", "linkedin_link": "", "snapchat_link": "", "youtube_link": "", "twitch_link": "", "is_active": true}]}}'
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -52,7 +52,7 @@ class TestAccountEndpoint(TestCase):
             "contact_email": "kenccar8@kenccar.com",
         }
 
-        response = self.client.post("/api/account/accounts", data=data)
+        response = self.client.post("/api/accounts", data=data)
         expected = {
             "is_error": False,
             "error": {},
@@ -92,7 +92,7 @@ class TestAccountEndpoint(TestCase):
             "contact_email": "kenccar8@kenccar.com",
         }
 
-        response = self.client.post("/api/account/accounts", data=data)
+        response = self.client.post("/api/accounts", data=data)
         expected = {
             "is_error": True,
             "error": {
@@ -111,7 +111,7 @@ class TestAccountEndpoint(TestCase):
         :return:
         """
 
-        response = self.client.get(f"/api/account/accounts/{str(self.account.id)}")
+        response = self.client.get(f"/api/accounts/{str(self.account.id)}")
         expected = {
             "is_error": False,
             "error": {},
@@ -146,7 +146,7 @@ class TestAccountEndpoint(TestCase):
         """
 
         response = self.client.get(
-            f"/api/account/accounts/239dbd79-8a47-4209-b2b9-f7466fed7ece"
+            f"/api/accounts/239dbd79-8a47-4209-b2b9-f7466fed7ece"
         )
         expected = {
             "is_error": True,
@@ -168,9 +168,7 @@ class TestAccountEndpoint(TestCase):
             "bio": "Kenneth Carmichael Blog Endpoint",
         }
 
-        response = self.client.put(
-            f"/api/account/accounts/{str(self.account.id)}", data=data
-        )
+        response = self.client.put(f"/api/accounts/{str(self.account.id)}", data=data)
         expected = {
             "is_error": False,
             "error": {},
@@ -208,9 +206,7 @@ class TestAccountEndpoint(TestCase):
             "bio": f"{'*'*1000}",
         }
 
-        response = self.client.put(
-            f"/api/account/accounts/{str(self.account.id)}", data=data
-        )
+        response = self.client.put(f"/api/accounts/{str(self.account.id)}", data=data)
         expected = {
             "is_error": True,
             "error": {"bio": ["Ensure this field has no more than 500 characters."]},
@@ -227,7 +223,7 @@ class TestAccountEndpoint(TestCase):
         :return:
         """
 
-        response = self.client.delete(f"/api/account/accounts/{str(self.account.id)}")
+        response = self.client.delete(f"/api/accounts/{str(self.account.id)}")
         expected = {
             "is_error": False,
             "error": {},

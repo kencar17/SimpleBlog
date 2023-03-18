@@ -21,6 +21,7 @@ urlpatterns = [
     path("blog-site-admin", admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
     path("api/auth/", include("apps.authentication.urls")),
-    path("api/account/", include("apps.account.urls")),
+    path("api/", include("apps.account.urls")),
     path("api/", include("apps.blog.urls")),
+    path("api/", include("apps.comments.urls")),
 ]

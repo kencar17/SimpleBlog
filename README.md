@@ -39,7 +39,7 @@ Blog:
 - [X] ~~Tags~~
 
 Comments:
-- [ ] Comments
+- [X] ~~Comments~~
 
 Grammarly:
 - [ ] Grammarly Integration
