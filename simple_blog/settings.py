@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     "apps.account.apps.AccountConfig",
     "apps.authentication.apps.AuthenticationConfig",
     "apps.blog.apps.BlogConfig",
-    "apps.comments.apps.CommentsConfig"
+    "apps.comments.apps.CommentsConfig",
 ]
 
 MIDDLEWARE = [
