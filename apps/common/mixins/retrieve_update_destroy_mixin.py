@@ -23,8 +23,8 @@ class BlogRetrieveUpdateDestroyMixin(RetrieveUpdateDestroyAPIView):
         :param request: request
         :return: Instance Json.
         """
-
-        serializer = self.serializer_class(self.get_object(), many=False)
+        serializer = self.get_serializer_class()
+        serializer = serializer(self.get_object(), many=False)
 
         return json_response(data=serializer.data)
 
@@ -36,7 +36,8 @@ class BlogRetrieveUpdateDestroyMixin(RetrieveUpdateDestroyAPIView):
         """
 
         json_data = request.data
-        serializer = self.serializer_class(data=json_data, many=False, partial=True)
+        serializer = self.get_serializer_class()
+        serializer = serializer(data=json_data, many=False, partial=True)
 
         if not serializer.is_valid():
             return json_response(message=serializer.errors, error=True)

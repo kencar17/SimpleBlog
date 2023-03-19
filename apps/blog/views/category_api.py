@@ -9,7 +9,6 @@ Version: 1.0
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework import filters
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.blog.models import Category
@@ -25,7 +24,7 @@ from apps.common.mixins.retrieve_update_destroy_mixin import (
 # TODO: How to do delete childs of parents
 
 
-class CategoryListLApi(BlogListCreateMixin, ListCreateAPIView):
+class CategoryListLApi(BlogListCreateMixin):
     """
     Get a List of users bases on query params, or create a new account.
     """
@@ -48,7 +47,7 @@ class CategoryListLApi(BlogListCreateMixin, ListCreateAPIView):
         return categories
 
 
-class CategoryDetailApi(BlogRetrieveUpdateDestroyMixin, RetrieveUpdateDestroyAPIView):
+class CategoryDetailApi(BlogRetrieveUpdateDestroyMixin):
     """
     Get, update, or delete individual category information.
     """

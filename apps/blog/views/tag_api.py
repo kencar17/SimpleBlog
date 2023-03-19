@@ -10,7 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework import filters
 
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.blog.models import Tag
@@ -21,7 +20,7 @@ from apps.common.mixins.retrieve_update_destroy_mixin import (
 )
 
 
-class TagListLApi(BlogListCreateMixin, ListCreateAPIView):
+class TagListLApi(BlogListCreateMixin):
     """
     Get a List of users bases on query params, or create a new account.
     """
@@ -35,7 +34,7 @@ class TagListLApi(BlogListCreateMixin, ListCreateAPIView):
     queryset = Tag.objects.all().order_by("-created_date", "name")
 
 
-class TagDetailApi(BlogRetrieveUpdateDestroyMixin, RetrieveUpdateDestroyAPIView):
+class TagDetailApi(BlogRetrieveUpdateDestroyMixin):
     """
     Get, update, or delete individual category information.
     """

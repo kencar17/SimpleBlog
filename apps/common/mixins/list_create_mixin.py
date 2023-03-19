@@ -20,6 +20,13 @@ class BlogListCreateMixin(ListCreateAPIView):
 
     create_serializer_class = None
 
+    def get_create_serializer(self):
+        """
+        Get Create serializer
+        :return:
+        """
+        return self.create_serializer_class
+
     def get(self, request, *args, **kwargs):
         """
         Get instances for the system
@@ -31,12 +38,13 @@ class BlogListCreateMixin(ListCreateAPIView):
         queryset = self.filter_queryset(queryset=queryset)
         pagination = ApiPagination()
         page = pagination.paginate_queryset(queryset=queryset, request=request)
+        serializer = self.get_serializer_class()
 
         if not page:
-            serializer = self.serializer_class(queryset, many=True)
+            serializer = serializer(queryset, many=True)
             return json_response(data=default_pagination(data=serializer.data))
 
-        serializer = self.serializer_class(page, many=True)
+        serializer = serializer(page, many=True)
 
         return json_response(data=pagination.get_paginated_response(serializer.data))
 
@@ -48,7 +56,8 @@ class BlogListCreateMixin(ListCreateAPIView):
         """
 
         json_data = request.data
-        serializer = self.create_serializer_class(data=json_data, many=False)
+        serializer = self.get_create_serializer()
+        serializer = serializer(data=json_data, many=False)
 
         if not serializer.is_valid():
             return json_response(message=serializer.errors, error=True)
@@ -59,4 +68,6 @@ class BlogListCreateMixin(ListCreateAPIView):
             message = {"message": "Creation Failed", "errors": exc.detail}
             return json_response(message=message, error=True)
 
-        return json_response(data=self.serializer_class(instance, many=False).data)
+        serializer = self.get_serializer_class()
+
+        return json_response(data=serializer(instance, many=False).data)

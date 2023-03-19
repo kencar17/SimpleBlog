@@ -9,7 +9,6 @@ Version: 1.0
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework import filters
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.blog.models import BlogPost
@@ -24,7 +23,7 @@ from apps.common.mixins.retrieve_update_destroy_mixin import (
 )
 
 
-class BlogListLApi(BlogListCreateMixin, ListCreateAPIView):
+class BlogListLApi(BlogListCreateMixin):
     """
     Get a List of users bases on query params, or create a new blog post.
     """
@@ -68,7 +67,7 @@ class BlogListLApi(BlogListCreateMixin, ListCreateAPIView):
         return blogs
 
 
-class BlogDetailApi(BlogRetrieveUpdateDestroyMixin, RetrieveUpdateDestroyAPIView):
+class BlogDetailApi(BlogRetrieveUpdateDestroyMixin):
     """
     Get, update, or delete individual blog post information.
     """
