@@ -198,7 +198,7 @@ class TestTagEndpoint(TestCase):
         expected = {
             "is_error": False,
             "error": {},
-            "content": {"message": "tag has been deleted."},
+            "content": {"message": "Instance has been deleted."},
         }
         ret = json.loads(response.content)
 

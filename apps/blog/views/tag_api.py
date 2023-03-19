@@ -9,18 +9,19 @@ Version: 1.0
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework import filters
-from rest_framework.exceptions import ValidationError
+
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.blog.models import Tag
 from apps.blog.serializers.tag_serializer import TagSerializer, CreateTagSerializer
+from apps.common.mixins.list_create_mixin import BlogListCreateMixin
+from apps.common.mixins.retrieve_update_destroy_mixin import (
+    BlogRetrieveUpdateDestroyMixin,
+)
 
-from apps.common.pagination.paginations import ApiPagination
-from apps.common.utilities.utilities import json_response, default_pagination
 
-
-class TagListLApi(ListCreateAPIView):
+class TagListLApi(BlogListCreateMixin, ListCreateAPIView):
     """
     Get a List of users bases on query params, or create a new account.
     """
@@ -28,56 +29,19 @@ class TagListLApi(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["name", "description"]
+
+    serializer_class = TagSerializer
+    create_serializer_class = CreateTagSerializer
     queryset = Tag.objects.all().order_by("-created_date", "name")
 
-    def get(self, request, *args, **kwargs):
-        """
-        Get Tags for the system
-        :param request: request
-        :return: Json list of tags.
-        """
 
-        queryset = self.get_queryset()
-        queryset = self.filter_queryset(queryset=queryset)
-        pagination = ApiPagination()
-        page = pagination.paginate_queryset(queryset=queryset, request=request)
-
-        if not page:
-            serializer = TagSerializer(queryset, many=True)
-            return json_response(data=default_pagination(data=serializer.data))
-
-        serializer = TagSerializer(page, many=True)
-
-        return json_response(data=pagination.get_paginated_response(serializer.data))
-
-    def post(self, request, *args, **kwargs):
-        """
-        Create a new tag.
-        :param request: request
-        :return: Json of tag.
-        """
-
-        json_data = request.data
-        serializer = CreateTagSerializer(data=json_data, many=False)
-
-        if not serializer.is_valid():
-            return json_response(message=serializer.errors, error=True)
-
-        try:
-            user = serializer.create(validated_data=serializer.validated_data)
-        except ValidationError as exc:
-            message = {"message": "Creation Failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        return json_response(data=TagSerializer(user, many=False).data)
-
-
-class TagDetailApi(RetrieveUpdateDestroyAPIView):
+class TagDetailApi(BlogRetrieveUpdateDestroyMixin, RetrieveUpdateDestroyAPIView):
     """
     Get, update, or delete individual category information.
     """
 
     authentication_classes = [JWTAuthentication]
+    serializer_class = TagSerializer
 
     def get_object(self):
         """
@@ -92,48 +56,3 @@ class TagDetailApi(RetrieveUpdateDestroyAPIView):
         self.check_object_permissions(self.request, tag)
 
         return tag
-
-    def get(self, request, *args, **kwargs):
-        """
-        Get tag information.
-        :param request: request
-        :return: tag Json.
-        """
-
-        serializer = TagSerializer(self.get_object(), many=False)
-
-        return json_response(data=serializer.data)
-
-    def put(self, request, *args, **kwargs):
-        """
-        Update tag Information.
-        :param request: request
-        :return: tag json.
-        """
-
-        json_data = request.data
-        serializer = TagSerializer(data=json_data, many=False, partial=True)
-
-        if not serializer.is_valid():
-            return json_response(message=serializer.errors, error=True)
-
-        try:
-            serializer.instance = serializer.update(
-                instance=self.get_object(), validated_data=serializer.validated_data
-            )
-        except ValidationError as exc:
-            message = {"message": "Update failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        return json_response(data=serializer.data)
-
-    def delete(self, request, *args, **kwargs):
-        """
-        Delete tag
-        :param request: request
-        :return: Message indicating Success
-        """
-        tag = self.get_object()
-        tag.delete()
-
-        return json_response(data={"message": "tag has been deleted."})

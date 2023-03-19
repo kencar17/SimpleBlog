@@ -131,7 +131,6 @@ class TestBlogPostEndpoint(TestCase):
                 "categories": [],
                 "tags": [],
                 "is_featured": False,
-                "content": "The Inuvialuit are descendants of the ancient Thule people, who migrated from Alaska to the Canadian Arctic around 1000 CE. They settled in the region now known as the Inuvialuit Settlement Region, which includes communities such as Tuktoyaktuk, Paulatuk, Sachs Harbour, Aklavik, and Ulukhaktok. Historically, the Inuvialuit have relied on hunting, fishing, and gathering to sustain their communities, forming deep connections with their environment.",
             },
         }
 
@@ -298,7 +297,7 @@ class TestBlogPostEndpoint(TestCase):
         expected = {
             "is_error": False,
             "error": {},
-            "content": {"message": "Blog post has been deleted."},
+            "content": {"message": "Instance has been deleted."},
         }
         ret = json.loads(response.content)
 
