@@ -10,7 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from rest_framework import filters
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from apps.comments.models import Comment
@@ -18,12 +17,13 @@ from apps.comments.serializers.comment_serializers import (
     CreateCommentSerializer,
     CommentSerializer,
 )
+from apps.common.mixins.list_create_mixin import BlogListCreateMixin
+from apps.common.mixins.retrieve_update_destroy_mixin import (
+    BlogRetrieveUpdateDestroyMixin,
+)
 
-from apps.common.pagination.paginations import ApiPagination
-from apps.common.utilities.utilities import json_response, default_pagination
 
-
-class CommentListLApi(ListCreateAPIView):
+class CommentListLApi(BlogListCreateMixin):
     """
     Get a List of users bases on query params, or create a new account.
     """
@@ -31,6 +31,9 @@ class CommentListLApi(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["content"]
+
+    serializer_class = CommentSerializer
+    create_serializer_class = CreateCommentSerializer
 
     def get_queryset(self):
         """
@@ -45,61 +48,17 @@ class CommentListLApi(ListCreateAPIView):
 
         return comments
 
-    def get(self, request, *args, **kwargs):
-        """
-        Get comments for the system
-        :param request: request
-        :return: Json list of comments.
-        """
 
-        try:
-            queryset = self.get_queryset()
-        except ValidationError as exc:
-            message = {"message": "Get Failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        queryset = self.filter_queryset(queryset=queryset)
-        pagination = ApiPagination()
-        page = pagination.paginate_queryset(queryset=queryset, request=request)
-
-        if not page:
-            serializer = CommentSerializer(queryset, many=True)
-            return json_response(data=default_pagination(data=serializer.data))
-
-        serializer = CommentSerializer(page, many=True)
-
-        return json_response(data=pagination.get_paginated_response(serializer.data))
-
-    def post(self, request, *args, **kwargs):
-        """
-        Create a new comment.
-        :param request: request
-        :return: Json of comment.
-        """
-
-        json_data = request.data
-        serializer = CreateCommentSerializer(data=json_data, many=False)
-
-        if not serializer.is_valid():
-            return json_response(message=serializer.errors, error=True)
-
-        try:
-            user = serializer.create(validated_data=serializer.validated_data)
-        except ValidationError as exc:
-            message = {"message": "Creation Failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        return json_response(data=CommentSerializer(user, many=False).data)
-
-
-class CommentUserListLApi(ListCreateAPIView):
+class CommentUserListLApi(BlogListCreateMixin):
     """
     Get a List of users bases on query params, or create a new account.
     """
 
+    http_method_names = ["get"]
     authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["content"]
+    serializer_class = CommentSerializer
 
     def get_queryset(self):
         """
@@ -114,38 +73,14 @@ class CommentUserListLApi(ListCreateAPIView):
 
         return comments
 
-    def get(self, request, *args, **kwargs):
-        """
-        Get comments for the system
-        :param request: request
-        :return: Json list of comments.
-        """
 
-        try:
-            queryset = self.get_queryset()
-        except ValidationError as exc:
-            message = {"message": "Get Failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        queryset = self.filter_queryset(queryset=queryset)
-        pagination = ApiPagination()
-        page = pagination.paginate_queryset(queryset=queryset, request=request)
-
-        if not page:
-            serializer = CommentSerializer(queryset, many=True)
-            return json_response(data=default_pagination(data=serializer.data))
-
-        serializer = CommentSerializer(page, many=True)
-
-        return json_response(data=pagination.get_paginated_response(serializer.data))
-
-
-class CommentDetailApi(RetrieveUpdateDestroyAPIView):
+class CommentDetailApi(BlogRetrieveUpdateDestroyMixin):
     """
     Get, update, or delete individual comment information.
     """
 
     authentication_classes = [JWTAuthentication]
+    serializer_class = CommentSerializer
 
     def get_object(self):
         """
@@ -162,48 +97,3 @@ class CommentDetailApi(RetrieveUpdateDestroyAPIView):
         self.check_object_permissions(self.request, category)
 
         return category
-
-    def get(self, request, *args, **kwargs):
-        """
-        Get comment information.
-        :param request: request
-        :return: comment Json.
-        """
-
-        serializer = CommentSerializer(self.get_object(), many=False)
-
-        return json_response(data=serializer.data)
-
-    def put(self, request, *args, **kwargs):
-        """
-        Update comments Information.
-        :param request: request
-        :return: Comment json.
-        """
-
-        json_data = request.data
-        serializer = CommentSerializer(data=json_data, many=False, partial=True)
-
-        if not serializer.is_valid():
-            return json_response(message=serializer.errors, error=True)
-
-        try:
-            serializer.instance = serializer.update(
-                instance=self.get_object(), validated_data=serializer.validated_data
-            )
-        except ValidationError as exc:
-            message = {"message": "Update failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        return json_response(data=serializer.data)
-
-    def delete(self, request, *args, **kwargs):
-        """
-        Delete comment
-        :param request: request
-        :return: Message indicating Success
-        """
-
-        self.get_object().delete()
-
-        return json_response(data={"message": "Comment has been deleted."})

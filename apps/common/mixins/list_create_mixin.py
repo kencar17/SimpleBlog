@@ -34,7 +34,12 @@ class BlogListCreateMixin(ListCreateAPIView):
         :return: Json list of instances.
         """
 
-        queryset = self.get_queryset()
+        try:
+            queryset = self.get_queryset()
+        except ValidationError as exc:
+            message = {"message": "Get Failed", "errors": exc.detail}
+            return json_response(message=message, error=True)
+
         queryset = self.filter_queryset(queryset=queryset)
         pagination = ApiPagination()
         page = pagination.paginate_queryset(queryset=queryset, request=request)

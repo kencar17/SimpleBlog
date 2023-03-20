@@ -11,8 +11,6 @@ from django.http import Http404
 from rest_framework import filters
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
     UpdateAPIView,
 )
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -23,14 +21,17 @@ from apps.account.serializers.user_serializer import (
     CreateUserSerializer,
     UserChangePasswordSerializer,
 )
-from apps.common.pagination.paginations import ApiPagination
-from apps.common.utilities.utilities import default_pagination, json_response
+from apps.common.mixins.list_create_mixin import BlogListCreateMixin
+from apps.common.mixins.retrieve_update_destroy_mixin import (
+    BlogRetrieveUpdateDestroyMixin,
+)
+from apps.common.utilities.utilities import json_response
 
 
 # TODO: Account Filtering of users
 
 
-class UserListLApi(ListCreateAPIView):
+class UserListLApi(BlogListCreateMixin):
     """
     Get a List of users bases on query params, or create a new user with auto gen password.
     """
@@ -38,6 +39,9 @@ class UserListLApi(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     filter_backends = [filters.SearchFilter]
     search_fields = ["username", "display_name", "fist_name", "last_name", "bio"]
+
+    serializer_class = UserSerializer
+    create_serializer_class = CreateUserSerializer
 
     def get_queryset(self):
         """
@@ -69,55 +73,14 @@ class UserListLApi(ListCreateAPIView):
 
         return users
 
-    def get(self, request, *args, **kwargs):
-        """
-        Get users for the system or an account
-        :param request: request
-        :return: Json list of Users.
-        """
 
-        users = self.get_queryset()
-
-        users = self.filter_queryset(queryset=users)
-        pagination = ApiPagination()
-        page = pagination.paginate_queryset(queryset=users, request=request)
-
-        if not page:
-            serializer = UserSerializer(users, many=True)
-            return json_response(data=default_pagination(data=serializer.data))
-
-        serializer = UserSerializer(page, many=True)
-
-        return json_response(data=pagination.get_paginated_response(serializer.data))
-
-    def post(self, request, *args, **kwargs):
-        """
-        Create a new user.
-        :param request: request
-        :return: Json of user.
-        """
-
-        json_data = request.data
-        serializer = CreateUserSerializer(data=json_data, many=False)
-
-        if not serializer.is_valid():
-            return json_response(message=serializer.errors, error=True)
-
-        try:
-            user = serializer.create(validated_data=serializer.validated_data)
-        except ValidationError as exc:
-            message = {"message": "User creation Failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        return json_response(data=UserSerializer(user, many=False).data)
-
-
-class UserDetailApi(RetrieveUpdateDestroyAPIView):
+class UserDetailApi(BlogRetrieveUpdateDestroyMixin):
     """
     Get, update, or delete individual user information.
     """
 
     authentication_classes = [JWTAuthentication]
+    serializer_class = UserSerializer
 
     def get_object(self):
         """
@@ -132,40 +95,6 @@ class UserDetailApi(RetrieveUpdateDestroyAPIView):
         self.check_object_permissions(self.request, user)
 
         return user
-
-    def get(self, request, *args, **kwargs):
-        """
-        Get user information.
-        :param request: request
-        :return: User Json.
-        """
-
-        serializer = UserSerializer(self.get_object(), many=False)
-
-        return json_response(data=serializer.data)
-
-    def put(self, request, *args, **kwargs):
-        """
-        Update User Information.
-        :param request: request
-        :return: User json.
-        """
-
-        json_data = request.data
-        serializer = UserSerializer(data=json_data, many=False, partial=True)
-
-        if not serializer.is_valid():
-            return json_response(message=serializer.errors, error=True)
-
-        try:
-            serializer.instance = serializer.update(
-                instance=self.get_object(), validated_data=serializer.validated_data
-            )
-        except ValidationError as exc:
-            message = {"message": "User update Failed", "errors": exc.detail}
-            return json_response(message=message, error=True)
-
-        return json_response(data=serializer.data)
 
     def delete(self, request, *args, **kwargs):
         """
