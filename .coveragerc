@@ -1,0 +1,11 @@
+
+[run]
+branch = True
+omit =
+    apps/account/management/*
+    apps/account/admin.py
+
+[report]
+omit =
+    apps/account/management/*
+    apps/account/admin.py

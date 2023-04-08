@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/amplication/amplication?color=purple"/>
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/kencar17/SimpleBlog?color=blue"/>
   <img alt="Black" src="https://img.shields.io/badge/code%20style-black-000000.svg"/>
   <img alt="Pylint" src="https://img.shields.io/badge/linting-pylint-yellowgreen"/>
   <a href="https://opensource.org/licenses/MIT">
@@ -11,36 +11,78 @@
 
 Simple Blog made with Django
 
-# Features
+## Features
 
 Simple Blog provides the following features:
 
-- To do
+Authentication:
+- JWT Authentication
 
-# Getting Started
+## To-dos
 
-You can get started with Simple Blog immediately on the Amplication Cloud. 
+Authentication:
+- [x] ~~JWT Authentication~~
+- [ ] Oauth Auth?
+- [ ] MFA (Text, Email, Authenticator App)
+
+Account:
+- [X] ~~Account~~
+- [X] ~~User Management Endpoint~~
+- [X] ~~Password Reset Endpoint~~
+- [ ] Account Followers
+- [ ] Account Following
+
+Blog:
+- [X] ~~Blog Management Endpoint~~
+- [X] ~~Tie Blog to User or Account~~
+- [X] ~~Categories~~
+- [X] ~~Tags~~
+
+Comments:
+- [X] ~~Comments~~
+
+Grammarly:
+- [ ] Grammarly Integration
+
+ChatGPT/OpenAI:
+- [ ] Blog Assistant/Helper
+- [ ] Blog Catch Phrases
+- [ ] Blog Social Media Generator
+- [ ] Blog Categories & Tag Suggestions 
+
+Notifications:
+- [ ] Push Notifications
+- [ ] Email Notifications
+- [ ] Text Notification
+
+Other:
+- [X] ~~Secret Key Generation~~
+- [ ] Search?
+
+## Getting Started
+
+You can get started with Simple Blog immediately on the Kencar Cloud. 
 
 Alternatively you can set up a local development environment.
 
 Environment Variables
 - BLOG_SECRET_KEY (random chars)
+- BLOG_SIGNING_KEY (random chars)
 
-```
+```bash
 # Clone Report to local
 git clone git@github.com:kencar17/SimpleBlog.git
 
-# Create Virtual Environment
+# Create Virtual Environment or Environment of your choice
 python -m venv venv
 
 # Install Project Requirements
 pip install -r requirements.txt
 
-# Create Secret Key using shell
-python manage.py shell
-> from django.core.management.utils import get_random_secret_key
-> get_random_secret_key()
-# Replace current Django Secret Key with output
+# Create BLOG_SECRET_KEY and BLOG_SIGNING_KEY. Make sure to copy theses as Environment Variables
+# Optional param: --secret_key' - Specify length of key, defaults to 50
+# Optional param: --signing_key' - Specify length of key, defaults to 50
+python manage.py generate_secret_keys
 
 # Make Migrations and Migrate Django Project
 python manage.py makemigrations
@@ -51,9 +93,9 @@ python manage.py createsuperuser
 
 # Run Project
 python manage.py runserver
-
 ```
-In browser of your choice, naivgate to http://localhost:8000/
+
+In browser of your choice, navigate to http://localhost:8000/
 
 Note: Please ensure all environment variables are configured
 

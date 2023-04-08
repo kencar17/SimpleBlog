@@ -1,0 +1,17 @@
+Alpha - 1.0.0 (April 7th, 2023)
+    Features:
+        - Add Custom Exception Handling
+        - Add Custom Pagination
+        - Add JWT Authentication
+        - Add Encryption Utility
+        - Add Secret Key Generation
+        - Add User Management Endpoints
+        - Add Account Management Endpoints
+        - Add Blog Post Endpoints
+        - Add Tag Endpoints
+        - Add Category Endpoints
+        - Add Comment Endpoints
+    Change:
+        -
+    Fix:
+        -
