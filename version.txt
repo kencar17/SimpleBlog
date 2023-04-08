@@ -1,4 +1,4 @@
-Alpha - 0.1 (April 7th, 2023)
+Alpha - 1.0 (April 7th, 2023)
     Features:
         - Add Custom Exception Handling
         - Add Custom Pagination
